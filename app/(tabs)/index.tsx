@@ -1,8 +1,7 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { Image, StyleSheet, Platform, View } from 'react-native';
+import { HelloWave } from '@/presentation/components/HelloWave';
+import ParallaxScrollView from '@/presentation/components/ParallaxScrollView';
+import { CustomText } from '@/presentation/components/CustomText';
 
 export default function HomeScreen() {
     return (
@@ -15,98 +14,93 @@ export default function HomeScreen() {
                 />
             }
         >
-            <ThemedView style={styles.titleContainer}>
-                <ThemedText type='title'>Hello World</ThemedText>
+            <View style={styles.titleContainer}>
+                <CustomText type='title'>Hello World</CustomText>
                 <HelloWave />
-            </ThemedView>
-            <ThemedView style={styles.stepContainer}>
-                <ThemedText type='subtitle'>Step 1: Try it</ThemedText>
-                <ThemedText>
+            </View>
+
+            <View style={styles.stepContainer}>
+                <CustomText type='subtitle'>Step 1: Try it</CustomText>
+                <CustomText>
                     Edit{' '}
-                    <ThemedText type='defaultSemiBold'>
+                    <CustomText type='defaultSemiBold'>
                         app/(tabs)/index.tsx
-                    </ThemedText>{' '}
+                    </CustomText>{' '}
                     to see changes. Press{' '}
-                    <ThemedText type='defaultSemiBold'>
+                    <CustomText type='defaultSemiBold'>
                         {Platform.select({
                             ios: 'cmd + d',
                             android: 'cmd + m'
                         })}
-                    </ThemedText>{' '}
+                    </CustomText>{' '}
                     to open developer tools.
-                </ThemedText>
-            </ThemedView>
-            <ThemedView style={styles.stepContainer}>
-                <ThemedText type='subtitle'>Step 2: Explore</ThemedText>
-                <ThemedText>
+                </CustomText>
+            </View>
+            <View style={styles.stepContainer}>
+                <CustomText type='subtitle'>Step 2: Explore</CustomText>
+                <CustomText>
                     Tap the Explore tab to learn more about what's included in
                     this starter app.
-                </ThemedText>
-            </ThemedView>
-            <ThemedView style={styles.stepContainer}>
-                <ThemedText type='subtitle'>
+                </CustomText>
+            </View>
+            <View style={styles.stepContainer}>
+                <CustomText type='subtitle'>
                     Step 3: Get a fresh start
-                </ThemedText>
-                <ThemedText>
+                </CustomText>
+                <CustomText>
                     When you're ready, run{' '}
-                    <ThemedText type='defaultSemiBold'>
+                    <CustomText type='defaultSemiBold'>
                         npm run reset-project
-                    </ThemedText>{' '}
+                    </CustomText>{' '}
                     to get a fresh{' '}
-                    <ThemedText type='defaultSemiBold'>app</ThemedText>{' '}
+                    <CustomText type='defaultSemiBold'>app</CustomText>{' '}
                     directory. This will move the current{' '}
-                    <ThemedText type='defaultSemiBold'>app</ThemedText> to{' '}
-                    <ThemedText type='defaultSemiBold'>app-example</ThemedText>.
-                </ThemedText>
-            </ThemedView>
-            <ThemedView
-                style={{ display: 'flex', flexDirection: 'column', gap: 8 }}
-            >
-                <ThemedText type='subtitle'>Step 4: Code!</ThemedText>
-                <ThemedText>
+                    <CustomText type='defaultSemiBold'>app</CustomText> to{' '}
+                    <CustomText type='defaultSemiBold'>app-example</CustomText>.
+                </CustomText>
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <CustomText type='subtitle'>Step 4: Code!</CustomText>
+                <CustomText>
                     When you're ready, run{' '}
-                    <ThemedText type='defaultSemiBold'>
+                    <CustomText type='defaultSemiBold'>
                         npm run reset-project
-                    </ThemedText>{' '}
+                    </CustomText>{' '}
                     to get a fresh{' '}
-                    <ThemedText type='defaultSemiBold'>app</ThemedText>{' '}
+                    <CustomText type='defaultSemiBold'>app</CustomText>{' '}
                     directory. This will move the current{' '}
-                    <ThemedText type='defaultSemiBold'>app</ThemedText> to{' '}
-                    <ThemedText type='defaultSemiBold'>app-example</ThemedText>.
-                </ThemedText>
-            </ThemedView>
-            <ThemedView
-                style={{ display: 'flex', flexDirection: 'column', gap: 8 }}
-            >
-                <ThemedText type='subtitle'>Step 4: Code!</ThemedText>
-                <ThemedText>
+                    <CustomText type='defaultSemiBold'>app</CustomText> to{' '}
+                    <CustomText type='defaultSemiBold'>app-example</CustomText>.
+                </CustomText>
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <CustomText type='subtitle'>Step 4: Code!</CustomText>
+                <CustomText>
                     When you're ready, run{' '}
-                    <ThemedText type='defaultSemiBold'>
+                    <CustomText type='defaultSemiBold'>
                         npm run reset-project
-                    </ThemedText>{' '}
+                    </CustomText>{' '}
                     to get a fresh{' '}
-                    <ThemedText type='defaultSemiBold'>app</ThemedText>{' '}
+                    <CustomText type='defaultSemiBold'>app</CustomText>{' '}
                     directory. This will move the current{' '}
-                    <ThemedText type='defaultSemiBold'>app</ThemedText> to{' '}
-                    <ThemedText type='defaultSemiBold'>app-example</ThemedText>.
-                </ThemedText>
-            </ThemedView>
-            <ThemedView
-                style={{ display: 'flex', flexDirection: 'column', gap: 8 }}
-            >
-                <ThemedText type='subtitle'>Step 4: Code!</ThemedText>
-                <ThemedText>
+                    <CustomText type='defaultSemiBold'>app</CustomText> to{' '}
+                    <CustomText type='defaultSemiBold'>app-example</CustomText>.
+                </CustomText>
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <CustomText type='subtitle'>Step 4: Code!</CustomText>
+                <CustomText>
                     When you're ready, run{' '}
-                    <ThemedText type='defaultSemiBold'>
+                    <CustomText type='defaultSemiBold'>
                         npm run reset-project
-                    </ThemedText>{' '}
+                    </CustomText>{' '}
                     to get a fresh{' '}
-                    <ThemedText type='defaultSemiBold'>app</ThemedText>{' '}
+                    <CustomText type='defaultSemiBold'>app</CustomText>{' '}
                     directory. This will move the current{' '}
-                    <ThemedText type='defaultSemiBold'>app</ThemedText> to{' '}
-                    <ThemedText type='defaultSemiBold'>app-example</ThemedText>.
-                </ThemedText>
-            </ThemedView>
+                    <CustomText type='defaultSemiBold'>app</CustomText> to{' '}
+                    <CustomText type='defaultSemiBold'>app-example</CustomText>.
+                </CustomText>
+            </View>
         </ParallaxScrollView>
     );
 }

@@ -1,24 +1,25 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { TabBarIcon } from '@/presentation/components/TabBarIcon';
+import { useAuth } from '@/contexts/AuthContext';
+import { Colors } from '@/constants/colors';
 
 export default function TabLayout() {
-    const colorScheme = useColorScheme();
+    const { isAuthenticated } = useAuth();
 
     return (
         <Tabs
             screenOptions={{
-                tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-                headerShown: false
+                headerShown: false,
+                tabBarInactiveTintColor: '#717173',
+                tabBarActiveTintColor: Colors.primaryBlue
             }}
         >
             <Tabs.Screen
                 name='index'
                 options={{
-                    title: 'Home',
+                    title: 'Beranda',
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
                             name={focused ? 'home' : 'home-outline'}
@@ -27,18 +28,38 @@ export default function TabLayout() {
                     )
                 }}
             />
+
             <Tabs.Screen
-                name='explore'
+                name='search/index'
                 options={{
-                    title: 'Explore',
+                    title: 'Cari',
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
-                            name={focused ? 'code-slash' : 'code-slash-outline'}
+                            name={focused ? 'search' : 'search-outline'}
                             color={color}
                         />
                     )
                 }}
             />
+
+            <Tabs.Screen
+                name='appointment/index'
+                options={{
+                    title: 'Janji Temu',
+                    tabBarIcon: ({ color, focused }) => (
+                        <TabBarIcon
+                            name={
+                                focused
+                                    ? 'calendar-clear'
+                                    : 'calendar-clear-outline'
+                            }
+                            color={color}
+                        />
+                    )
+                }}
+                redirect={!isAuthenticated}
+            />
+
             <Tabs.Screen
                 name='test'
                 options={{
@@ -46,6 +67,20 @@ export default function TabLayout() {
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
                             name={focused ? 'code-slash' : 'code-slash-outline'}
+                            color={color}
+                        />
+                    )
+                }}
+                redirect={true}
+            />
+
+            <Tabs.Screen
+                name='profile/index'
+                options={{
+                    title: 'Profil',
+                    tabBarIcon: ({ color, focused }) => (
+                        <TabBarIcon
+                            name={focused ? 'person' : 'person-outline'}
                             color={color}
                         />
                     )
