@@ -3,7 +3,7 @@ import React from 'react';
 
 import { TabBarIcon } from '@/presentation/components/TabBarIcon';
 import { useAuth } from '@/contexts/AuthContext';
-import { Colors } from '@/constants/colors';
+import { colors } from '@/constants/colors';
 
 export default function TabLayout() {
     const { isAuthenticated } = useAuth();
@@ -13,7 +13,7 @@ export default function TabLayout() {
             screenOptions={{
                 headerShown: false,
                 tabBarInactiveTintColor: '#717173',
-                tabBarActiveTintColor: Colors.primaryBlue
+                tabBarActiveTintColor: colors.primaryBlue
             }}
         >
             <Tabs.Screen
