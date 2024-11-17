@@ -1,8 +1,7 @@
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { CustomText } from '@/presentation/components/CustomText';
 import axios from 'axios';
 import { useState } from 'react';
-import { Pressable, ScrollView } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useQuery } from 'react-query';
 
@@ -47,7 +46,7 @@ const TestPage = () => {
 
     return (
         <>
-            <ThemedView
+            <View
                 style={{
                     flex: 1,
                     paddingTop: insets.top + 8,
@@ -59,7 +58,7 @@ const TestPage = () => {
                         flex: 1
                     }}
                 >
-                    <ThemedView
+                    <View
                         style={{
                             gap: 24,
                             flexDirection: 'column',
@@ -67,45 +66,39 @@ const TestPage = () => {
                         }}
                     >
                         {!isLoading && (
-                            <ThemedView
-                                style={{ gap: 8, flexDirection: 'column' }}
-                            >
-                                <ThemedText type='subtitle'>
+                            <View style={{ gap: 8, flexDirection: 'column' }}>
+                                <CustomText type='subtitle'>
                                     Cats Fact of the day
-                                </ThemedText>
-                                <ThemedText type='default'>
+                                </CustomText>
+                                <CustomText type='default'>
                                     {quotes.fact}
-                                </ThemedText>
-                            </ThemedView>
+                                </CustomText>
+                            </View>
                         )}
 
                         {!isLoadingIP && (
-                            <ThemedView
-                                style={{ gap: 8, flexDirection: 'column' }}
-                            >
-                                <ThemedText type='subtitle'>Your IP</ThemedText>
-                                <ThemedText type='default'>{ip.ip}</ThemedText>
-                            </ThemedView>
+                            <View style={{ gap: 8, flexDirection: 'column' }}>
+                                <CustomText type='subtitle'>Your IP</CustomText>
+                                <CustomText type='default'>{ip.ip}</CustomText>
+                            </View>
                         )}
 
                         {!isLoadingIPLocation && (
-                            <ThemedView
-                                style={{ gap: 8, flexDirection: 'column' }}
-                            >
-                                <ThemedText type='subtitle'>
+                            <View style={{ gap: 8, flexDirection: 'column' }}>
+                                <CustomText type='subtitle'>
                                     Your IP Location
-                                </ThemedText>
-                                <ThemedText type='default'>
+                                </CustomText>
+                                <CustomText type='default'>
                                     {JSON.stringify(ipLocation)}
-                                </ThemedText>
-                            </ThemedView>
+                                </CustomText>
+                            </View>
                         )}
 
-                        <ThemedView style={{ gap: 8, flexDirection: 'column' }}>
-                            <ThemedText type='subtitle'>
+                        <View style={{ gap: 8, flexDirection: 'column' }}>
+                            <CustomText type='subtitle'>
                                 Count : {count}
-                            </ThemedText>
-                            <ThemedView
+                            </CustomText>
+                            <View
                                 style={{
                                     display: 'flex',
                                     flexDirection: 'row',
@@ -120,14 +113,15 @@ const TestPage = () => {
                                         alignItems: 'center'
                                     }}
                                     onPress={() =>
-                                        setCount((state) =>
-                                            state === 0 ? 0 : state - 1
-                                        )
+                                        setCount((state) => {
+                                            console.log('test');
+                                            return state === 0 ? 0 : state - 1;
+                                        })
                                     }
                                 >
-                                    <ThemedText style={{ color: 'white' }}>
+                                    <CustomText style={{ color: 'white' }}>
                                         -
-                                    </ThemedText>
+                                    </CustomText>
                                 </Pressable>
                                 <Pressable
                                     style={{
@@ -139,15 +133,15 @@ const TestPage = () => {
                                         setCount((state) => state + 1)
                                     }
                                 >
-                                    <ThemedText style={{ color: 'white' }}>
+                                    <CustomText style={{ color: 'white' }}>
                                         +
-                                    </ThemedText>
+                                    </CustomText>
                                 </Pressable>
-                            </ThemedView>
-                        </ThemedView>
-                    </ThemedView>
+                            </View>
+                        </View>
+                    </View>
                 </ScrollView>
-            </ThemedView>
+            </View>
         </>
     );
 };
