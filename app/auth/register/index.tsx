@@ -1,7 +1,7 @@
+import RegisterScreenComponent from '@/presentation/screens/auth/register/Component';
 import { Stack } from 'expo-router';
-import LoginScreenComponent from '@/presentation/screens/auth/login/Component';
 
-const AuthPage = () => {
+const RegisterPage = () => {
     return (
         <>
             <Stack.Screen
@@ -11,9 +11,9 @@ const AuthPage = () => {
                 }}
             />
 
-            <LoginScreenComponent />
+            <RegisterScreenComponent />
         </>
     );
 };
 
-export default AuthPage;
+export default RegisterPage;

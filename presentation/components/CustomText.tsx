@@ -20,6 +20,7 @@ export function CustomText({
 }: CustomTextProps) {
     return (
         <Text
+            allowFontScaling={false}
             style={[
                 { color: customColor },
                 type === 'default' ? styles.default : undefined,
@@ -39,41 +40,33 @@ export function CustomText({
 const styles = StyleSheet.create({
     verysmall: {
         fontSize: 12,
-        lineHeight: 24,
         fontFamily: 'Poppins-Regular'
     },
     small: {
         fontSize: 14,
-        lineHeight: 24,
         fontFamily: 'Poppins-Regular'
     },
     default: {
         fontSize: 16,
-        lineHeight: 24,
         fontFamily: 'Poppins-Regular'
     },
     defaultSemiBold: {
         fontSize: 16,
-        lineHeight: 24,
         fontFamily: 'Poppins-SemiBold'
     },
     title: {
         fontSize: 32,
-        lineHeight: 32,
         fontFamily: 'Poppins-Bold'
     },
     subtitle: {
         fontSize: 20,
-        lineHeight: 30,
         fontFamily: 'Poppins-Bold'
     },
     link: {
         fontSize: 16,
-        lineHeight: 30,
         color: '#0a7ea4',
         fontFamily: 'Poppins-Regular'
     },
-
     poppinsBlack: {
         fontFamily: 'Poppins-Black'
     },

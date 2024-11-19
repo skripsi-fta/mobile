@@ -14,7 +14,7 @@ export namespace Profile {
         name: string;
         email: string;
         phoneNumber: string;
-        patientData: PatientData;
+        patient: PatientData | null;
     }
 
     export interface Response {
