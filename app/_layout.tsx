@@ -1,6 +1,6 @@
 import { AuthContextProvider } from '@/contexts/AuthContext';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Stack,  } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
@@ -49,7 +49,15 @@ export default function RootLayout() {
                 <Stack>
                     <Stack.Screen
                         name='(tabs)'
-                        options={{ headerShown: false }}
+                        options={{
+                            headerShown: false,
+                            fullScreenGestureEnabled: true
+                        }}
+                    />
+
+                    <Stack.Screen
+                        name='auth'
+                        options={{ headerShown: false, gestureEnabled: false }}
                     />
                 </Stack>
             </AuthContextProvider>

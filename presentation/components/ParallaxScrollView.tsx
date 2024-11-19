@@ -1,5 +1,14 @@
 import type { PropsWithChildren, ReactElement } from 'react';
-import { StyleSheet, View, useColorScheme } from 'react-native';
+import {
+    StyleSheet,
+    View,
+    type ViewStyle,
+    type StyleProp,
+    KeyboardAvoidingView,
+    ScrollView,
+    Platform
+} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Animated, {
     interpolate,
     useAnimatedRef,
@@ -7,19 +16,24 @@ import Animated, {
     useScrollViewOffset
 } from 'react-native-reanimated';
 
-const HEADER_HEIGHT = 250;
-
 type Props = PropsWithChildren<{
-    headerImage: ReactElement;
-    headerBackgroundColor: { dark: string; light: string };
+    headerContent: ReactElement;
+    headerBackgroundColor: string;
+    headerHeight?: number;
+    childrenStyle?: StyleProp<ViewStyle>;
+    containerStyle?: StyleProp<ViewStyle>;
+    fullHeight?: boolean;
 }>;
 
 export default function ParallaxScrollView({
     children,
-    headerImage,
-    headerBackgroundColor
+    headerContent,
+    headerBackgroundColor,
+    headerHeight = 250,
+    childrenStyle = {},
+    containerStyle = {},
+    fullHeight = false
 }: Props) {
-    const colorScheme = useColorScheme() ?? 'light';
     const scrollRef = useAnimatedRef<Animated.ScrollView>();
     const scrollOffset = useScrollViewOffset(scrollRef);
 
@@ -29,14 +43,14 @@ export default function ParallaxScrollView({
                 {
                     translateY: interpolate(
                         scrollOffset.value,
-                        [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
-                        [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.75]
+                        [-headerHeight, 0, headerHeight],
+                        [-headerHeight / 2, 0, headerHeight * 0.75]
                     )
                 },
                 {
                     scale: interpolate(
                         scrollOffset.value,
-                        [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
+                        [-headerHeight, 0, headerHeight],
                         [2, 1, 1]
                     )
                 }
@@ -45,39 +59,63 @@ export default function ParallaxScrollView({
     });
 
     return (
-        <View style={{ ...styles.container, backgroundColor: 'white' }}>
-            <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
+        <KeyboardAwareScrollView
+            style={[
+                containerStyle,
+                { ...styles.container, backgroundColor: headerBackgroundColor }
+            ]}
+            contentContainerStyle={
+                fullHeight ? { flex: 1, height: '100%' } : {}
+            }
+            enableOnAndroid={true}
+            enableAutomaticScroll={Platform.OS === 'ios'}
+        >
+            <Animated.ScrollView
+                ref={scrollRef}
+                scrollEventThrottle={16}
+                contentContainerStyle={
+                    fullHeight ? { flex: 1, height: '100%' } : {}
+                }
+            >
                 <Animated.View
                     style={[
                         styles.header,
                         {
-                            backgroundColor: headerBackgroundColor[colorScheme]
+                            backgroundColor: headerBackgroundColor,
+                            height: headerHeight
                         },
                         headerAnimatedStyle
                     ]}
                 >
-                    {headerImage}
+                    {headerContent}
                 </Animated.View>
-                <View style={{ ...styles.content, backgroundColor: 'white' }}>
+                <View
+                    style={[
+                        {
+                            ...styles.content,
+                            backgroundColor: 'white'
+                        },
+                        childrenStyle
+                    ]}
+                >
                     {children}
                 </View>
             </Animated.ScrollView>
-        </View>
+        </KeyboardAwareScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column'
     },
     header: {
-        height: 250,
         overflow: 'hidden'
     },
     content: {
         flex: 1,
-        padding: 32,
-        gap: 16,
         overflow: 'hidden'
     }
 });

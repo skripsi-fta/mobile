@@ -1,19 +1,53 @@
-import { Image, StyleSheet, Platform, View } from 'react-native';
+import {
+    Image,
+    StyleSheet,
+    Platform,
+    View,
+    TouchableOpacity
+} from 'react-native';
 import { HelloWave } from '@/presentation/components/HelloWave';
 import ParallaxScrollView from '@/presentation/components/ParallaxScrollView';
 import { CustomText } from '@/presentation/components/CustomText';
+import { useMutation } from 'react-query';
+import { useAuth } from '@/contexts/AuthContext';
+import LoadingOverlay from '@/presentation/components/LoadingOverlay';
 
 export default function HomeScreen() {
+    const { http } = useAuth();
+
+    const { mutate } = useMutation({
+        mutationFn: async () => {
+            const data = await http.get('/janjitemu');
+
+            return data;
+        },
+        onSuccess: (data) => {
+            console.log(data.data);
+        },
+        onError: (err) => {
+            console.log(err);
+        }
+    });
+
     return (
         <ParallaxScrollView
-            headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-            headerImage={
+            headerBackgroundColor={'#A1CEDC'}
+            headerContent={
                 <Image
                     source={require('@/assets/images/partial-react-logo.png')}
                     style={styles.reactLogo}
                 />
             }
         >
+            <TouchableOpacity>
+                <CustomText
+                    onPress={() => {
+                        mutate();
+                    }}
+                >
+                    tes refresh token protected api
+                </CustomText>
+            </TouchableOpacity>
             <View style={styles.titleContainer}>
                 <CustomText type='title'>Hello World</CustomText>
                 <HelloWave />
