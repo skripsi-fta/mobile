@@ -62,10 +62,11 @@ export default function ParallaxScrollView({
         <KeyboardAwareScrollView
             style={[
                 containerStyle,
-                { ...styles.container, backgroundColor: headerBackgroundColor }
+                { ...styles.container, backgroundColor: headerBackgroundColor },
+                fullHeight ? { flex: 1, minHeight: '100%', flexGrow: 1 } : {}
             ]}
             contentContainerStyle={
-                fullHeight ? { flex: 1, height: '100%' } : {}
+                fullHeight ? { flex: 1, minHeight: '100%', flexGrow: 1 } : {}
             }
             enableOnAndroid={true}
             enableAutomaticScroll={Platform.OS === 'ios'}
@@ -74,7 +75,9 @@ export default function ParallaxScrollView({
                 ref={scrollRef}
                 scrollEventThrottle={16}
                 contentContainerStyle={
-                    fullHeight ? { flex: 1, height: '100%' } : {}
+                    fullHeight
+                        ? { flex: 1, minHeight: '100%', flexGrow: 1 }
+                        : {}
                 }
             >
                 <Animated.View
@@ -95,7 +98,10 @@ export default function ParallaxScrollView({
                             ...styles.content,
                             backgroundColor: 'white'
                         },
-                        childrenStyle
+                        childrenStyle,
+                        fullHeight
+                            ? { flex: 1, minHeight: '100%', flexGrow: 1 }
+                            : {}
                     ]}
                 >
                     {children}

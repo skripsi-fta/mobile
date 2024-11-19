@@ -11,6 +11,7 @@ import { CustomText } from '@/presentation/components/CustomText';
 import { useMutation } from 'react-query';
 import { useAuth } from '@/contexts/AuthContext';
 import LoadingOverlay from '@/presentation/components/LoadingOverlay';
+import { getItem } from '@/utils/AsyncStorage';
 
 export default function HomeScreen() {
     const { http } = useAuth();
@@ -41,11 +42,12 @@ export default function HomeScreen() {
         >
             <TouchableOpacity>
                 <CustomText
-                    onPress={() => {
+                    onPress={async () => {
                         mutate();
+                        console.log(await getItem('user-data'));
                     }}
                 >
-                    tes refresh token protected api
+                    tes refresh token protected api print user-data
                 </CustomText>
             </TouchableOpacity>
             <View style={styles.titleContainer}>
