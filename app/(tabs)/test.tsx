@@ -114,7 +114,6 @@ const TestPage = () => {
                                     }}
                                     onPress={() =>
                                         setCount((state) => {
-                                            console.log('test');
                                             return state === 0 ? 0 : state - 1;
                                         })
                                     }

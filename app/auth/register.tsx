@@ -1,22 +1,22 @@
 import { CustomText } from '@/presentation/components/CustomText';
-import { Tabs } from 'expo-router';
+import { Slot, Stack, Tabs, useRouter } from 'expo-router';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const AuthPage = () => {
+const RegisterPage = () => {
     const insets = useSafeAreaInsets();
+
+    const router = useRouter();
 
     return (
         <>
-            <Tabs.Screen
+            <Stack.Screen
                 options={{
                     title: 'Home',
-                    headerShown: false,
-                    tabBarStyle: {
-                        display: 'none'
-                    }
+                    headerShown: false
                 }}
             />
+
             <View
                 style={{
                     flex: 1,
@@ -24,10 +24,12 @@ const AuthPage = () => {
                     paddingHorizontal: 16
                 }}
             >
-                <CustomText>auth Page</CustomText>
+                <CustomText onPress={() => router.push('/auth')}>
+                    this is register page, Go to Index Page
+                </CustomText>
             </View>
         </>
     );
 };
 
-export default AuthPage;
+export default RegisterPage;

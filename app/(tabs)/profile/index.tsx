@@ -1,22 +1,36 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { CustomText } from '@/presentation/components/CustomText';
-import { useRouter } from 'expo-router';
-import { useEffect } from 'react';
-import { View } from 'react-native';
+import { removeItem } from '@/utils/AsyncStorage';
+import { useFocusEffect, useNavigation, useRouter } from 'expo-router';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const ProfilePage = () => {
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, refetchAuth } = useAuth();
 
     const insets = useSafeAreaInsets();
 
     const router = useRouter();
 
-    useEffect(() => {
+    useFocusEffect(() => {
         if (!isAuthenticated) {
-            // router.push('/auth');
+            router.push('/auth');
         }
-    }, [isAuthenticated]);
+    });
+
+    if (!isAuthenticated) {
+        return null;
+    }
+
+    const navigation = useNavigation();
+
+    const backToHome = () => {
+        navigation.reset({
+            index: 0,
+            routes: [{ name: '(tabs)' as never }]
+        });
+        refetchAuth();
+    };
 
     return (
         <View
@@ -27,6 +41,14 @@ const ProfilePage = () => {
             }}
         >
             <CustomText>Account Page</CustomText>
+            <TouchableOpacity
+                onPress={async () => {
+                    await removeItem('user-data');
+                    backToHome();
+                }}
+            >
+                <Text>logout</Text>
+            </TouchableOpacity>
         </View>
     );
 };

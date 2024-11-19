@@ -14,7 +14,6 @@ export namespace Profile {
         name: string;
         email: string;
         phoneNumber: string;
-        username: string;
         patientData: PatientData;
     }
 

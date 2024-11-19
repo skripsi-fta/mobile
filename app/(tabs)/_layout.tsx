@@ -1,9 +1,9 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 
-import { TabBarIcon } from '@/presentation/components/TabBarIcon';
 import { useAuth } from '@/contexts/AuthContext';
 import { colors } from '@/constants/colors';
+import { CustomIcons } from '@/presentation/components/CustomIcons';
 
 export default function TabLayout() {
     const { isAuthenticated } = useAuth();
@@ -21,7 +21,8 @@ export default function TabLayout() {
                 options={{
                     title: 'Beranda',
                     tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon
+                        <CustomIcons
+                            type='ion'
                             name={focused ? 'home' : 'home-outline'}
                             color={color}
                         />
@@ -34,7 +35,8 @@ export default function TabLayout() {
                 options={{
                     title: 'Cari',
                     tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon
+                        <CustomIcons
+                            type='ion'
                             name={focused ? 'search' : 'search-outline'}
                             color={color}
                         />
@@ -47,7 +49,8 @@ export default function TabLayout() {
                 options={{
                     title: 'Janji Temu',
                     tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon
+                        <CustomIcons
+                            type='ion'
                             name={
                                 focused
                                     ? 'calendar-clear'
@@ -65,7 +68,8 @@ export default function TabLayout() {
                 options={{
                     title: 'Test',
                     tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon
+                        <CustomIcons
+                            type='ion'
                             name={focused ? 'code-slash' : 'code-slash-outline'}
                             color={color}
                         />
@@ -79,7 +83,8 @@ export default function TabLayout() {
                 options={{
                     title: 'Profil',
                     tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon
+                        <CustomIcons
+                            type='ion'
                             name={focused ? 'person' : 'person-outline'}
                             color={color}
                         />
