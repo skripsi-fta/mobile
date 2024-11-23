@@ -216,7 +216,9 @@ const LoginScreenComponent = () => {
                                 )}
                             />
                             <TouchableOpacity
-                                onPress={() => router.push('/auth/register')}
+                                onPress={() =>
+                                    router.push('/auth/register')
+                                }
                             >
                                 <CustomText
                                     type='verysmall'

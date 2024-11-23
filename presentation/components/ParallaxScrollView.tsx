@@ -63,23 +63,15 @@ export default function ParallaxScrollView({
             style={[
                 containerStyle,
                 { ...styles.container, backgroundColor: headerBackgroundColor },
-                fullHeight ? { flex: 1, minHeight: '100%', flexGrow: 1 } : {}
+                fullHeight ? { flex: 1, minHeight: '100%' } : {}
             ]}
             contentContainerStyle={
-                fullHeight ? { flex: 1, minHeight: '100%', flexGrow: 1 } : {}
+                fullHeight ? { flex: 1, minHeight: '100%' } : {}
             }
             enableOnAndroid={true}
             enableAutomaticScroll={Platform.OS === 'ios'}
         >
-            <Animated.ScrollView
-                ref={scrollRef}
-                scrollEventThrottle={16}
-                contentContainerStyle={
-                    fullHeight
-                        ? { flex: 1, minHeight: '100%', flexGrow: 1 }
-                        : {}
-                }
-            >
+            <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
                 <Animated.View
                     style={[
                         styles.header,
@@ -99,9 +91,7 @@ export default function ParallaxScrollView({
                             backgroundColor: 'white'
                         },
                         childrenStyle,
-                        fullHeight
-                            ? { flex: 1, minHeight: '100%', flexGrow: 1 }
-                            : {}
+                        fullHeight ? { flex: 1, minHeight: '100%' } : {}
                     ]}
                 >
                     {children}
