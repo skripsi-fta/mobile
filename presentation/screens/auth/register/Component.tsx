@@ -1,6 +1,5 @@
 import { colors } from '@/constants/colors';
 import { useAuth } from '@/contexts/AuthContext';
-import type { UserLoginForm } from '@/infrastructure/models/auth/login';
 import {
     userRegisterValidation,
     type UserRegisterForm
@@ -11,22 +10,19 @@ import { CustomText } from '@/presentation/components/CustomText';
 import { TextInput } from '@/presentation/components/CustomTextInput';
 import LoadingOverlay from '@/presentation/components/LoadingOverlay';
 import ParallaxScrollView from '@/presentation/components/ParallaxScrollView';
-import { setItem } from '@/utils/AsyncStorage';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { AxiosError } from 'axios';
 import { useNavigation, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Dimensions, Image, TouchableOpacity, View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useMutation } from 'react-query';
 
 const RegisterScreenComponent = () => {
-    const { refetchAuth, http } = useAuth();
+    const { http } = useAuth();
 
     const [error, setError] = useState<string>('');
-
-    const navigation = useNavigation();
 
     const router = useRouter();
 
@@ -40,26 +36,6 @@ const RegisterScreenComponent = () => {
     const username = watch('credentials');
 
     const useCase = new AuthAPI(http);
-
-    const backToHome = () => {
-        navigation.reset({
-            index: 0,
-            routes: [{ name: '(tabs)' as never }]
-        });
-        refetchAuth();
-    };
-
-    const { mutate: login, isLoading: isLoadingLogin } = useMutation({
-        mutationKey: ['login'],
-        mutationFn: (data: UserLoginForm) => useCase.login(data),
-        onSuccess: async (data) => {
-            await setItem('user-data', data);
-            backToHome();
-        },
-        onError: (res: AxiosError<{ message: string }>) => {
-            setError(() => res.response?.data.message ?? '');
-        }
-    });
 
     const { mutate: register, isLoading } = useMutation({
         mutationKey: ['register'],
@@ -80,7 +56,7 @@ const RegisterScreenComponent = () => {
 
     return (
         <>
-            {(isLoading || isLoadingLogin) && <LoadingOverlay />}
+            {(isLoading || isLoading) && <LoadingOverlay />}
 
             <ParallaxScrollView
                 headerBackgroundColor={colors.primaryBlue}
@@ -132,6 +108,7 @@ const RegisterScreenComponent = () => {
                     borderBottomRightRadius: 0,
                     backgroundColor: 'white'
                 }}
+                fullHeight
             >
                 <View
                     style={{

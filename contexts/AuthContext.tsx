@@ -1,19 +1,23 @@
 import type { Profile } from '@/infrastructure/models/auth/profile';
+import { CustomText } from '@/presentation/components/CustomText';
+import NoticeModal from '@/presentation/screens/profile/patient/Components/NoticeModal';
+import { useModal } from '@/providers/ModalProvider';
 import { getItem, removeItem, setItem } from '@/utils/AsyncStorage';
+import { useIsFocused } from '@react-navigation/native';
 import axios, { type AxiosInstance } from 'axios';
-import { useNavigation } from 'expo-router';
+import { useFocusEffect, useNavigation } from 'expo-router';
 import {
     createContext,
     useContext,
     type FC,
     type PropsWithChildren,
-    useEffect,
-    useState
+    useEffect
 } from 'react';
+import { View } from 'react-native';
 import { useQuery } from 'react-query';
 
 export interface AuthContextType {
-    user: Profile.PatientData | null;
+    user: Profile.UserDataLocalStorage | null;
     isLoading: boolean;
     isError: boolean;
     isAuthenticated: boolean;
@@ -25,10 +29,10 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const { data, isLoading, isError, refetch } =
-        useQuery<Profile.PatientData | null>({
+        useQuery<Profile.UserDataLocalStorage | null>({
             queryKey: ['user-data'],
             queryFn: async () => {
-                const user: Profile.PatientData | null = await getItem(
+                const user: Profile.UserDataLocalStorage | null = await getItem(
                     'user-data'
                 );
 

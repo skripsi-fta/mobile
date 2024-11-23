@@ -11,7 +11,6 @@ export namespace Profile {
 
     export interface UserData {
         id: number;
-        name: string;
         email: string;
         phoneNumber: string;
         patient: PatientData | null;
@@ -21,5 +20,11 @@ export namespace Profile {
         user: UserData;
         token: string;
         refreshToken: string;
+    }
+
+    export interface UserDataLocalStorage {
+        refreshToken: string;
+        token: string;
+        user: UserData;
     }
 }
