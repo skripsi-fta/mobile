@@ -12,7 +12,7 @@ import { CustomText } from '@/presentation/components/CustomText';
 import { TextInput } from '@/presentation/components/CustomTextInput';
 import LoadingOverlay from '@/presentation/components/LoadingOverlay';
 import { genderType, identityType } from '@/shared/constant';
-import { setItem } from '@/utils/AsyncStorage';
+import { getItem, setItem } from '@/utils/AsyncStorage';
 import dayjsUtils from '@/utils/dayjs';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { AxiosError } from 'axios';
@@ -74,7 +74,14 @@ const LinkPatientComponent = () => {
             onSuccess: async (data) => {
                 setError(() => '');
                 setError2(() => '');
-                await setItem('user-data', data.data);
+
+                const patientData = await getItem('user-data');
+
+                await setItem('user-data', {
+                    ...(patientData as Object),
+                    user: data.data
+                });
+
                 refetchAuth();
                 setTimeout(() => {
                     backToHome();

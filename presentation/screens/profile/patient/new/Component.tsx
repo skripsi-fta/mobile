@@ -25,7 +25,7 @@ import { PatientAPI } from '@/infrastructure/usecase/patient';
 import { useMutation } from 'react-query';
 import type { AxiosError } from 'axios';
 import LoadingOverlay from '@/presentation/components/LoadingOverlay';
-import { setItem } from '@/utils/AsyncStorage';
+import { getItem, setItem } from '@/utils/AsyncStorage';
 
 const NewPatientComponent = () => {
     const { refetchAuth, http } = useAuth();
@@ -59,8 +59,13 @@ const NewPatientComponent = () => {
         mutationKey: ['create-patient'],
         mutationFn: (data: CreatePatientValidation) => useCase.create(data),
         onSuccess: async (data) => {
-            console.log(data);
-            await setItem('user-data', data.data);
+            const patientData = await getItem('user-data');
+
+            await setItem('user-data', {
+                ...(patientData as Object),
+                user: data.data
+            });
+
             refetchAuth();
             setTimeout(() => {
                 backToHome();
