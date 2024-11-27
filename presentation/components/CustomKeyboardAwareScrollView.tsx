@@ -1,5 +1,11 @@
 import type { PropsWithChildren } from 'react';
-import { Platform, type StyleProp, type ViewStyle } from 'react-native';
+import {
+    Platform,
+    SafeAreaView,
+    SafeAreaViewBase,
+    type StyleProp,
+    type ViewStyle
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type Props = PropsWithChildren<{
@@ -28,10 +34,11 @@ const CustomKeyboardAwareScrollView = ({
                     containerStyle,
                     fullHeight ? { flex: 1, minHeight: '100%' } : {}
                 ]}
+                contentInsetAdjustmentBehavior='automatic'
                 enableOnAndroid={true}
                 enableAutomaticScroll={Platform.OS === 'ios'}
             >
-                {children}
+                <SafeAreaView>{children}</SafeAreaView>
             </KeyboardAwareScrollView>
         </>
     );
