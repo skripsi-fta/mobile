@@ -1,9 +1,11 @@
 import { colors } from '@/constants/colors';
 import { useAuth } from '@/contexts/AuthContext';
+import { DoctorAPi } from '@/infrastructure/usecase/doctor';
 import { SpesialisasiAPI } from '@/infrastructure/usecase/spesialisasi';
 import CustomKeyboardAwareScrollView from '@/presentation/components/CustomKeyboardAwareScrollView';
 import { CustomText } from '@/presentation/components/CustomText';
 import { HelloWave } from '@/presentation/components/HelloWave';
+import DoctorItem from '@/presentation/components/doctor/DoctorItem';
 import SpesialisasiItem from '@/presentation/components/spesialisasi/SpesialisasiItem';
 import { useState } from 'react';
 import {
@@ -22,6 +24,8 @@ const HomePageComponent = () => {
 
     const specializationAPI = new SpesialisasiAPI(http);
 
+    const doctorAPI = new DoctorAPi(http);
+
     const [refreshing, setRefreshing] = useState<boolean>(false);
 
     const {
@@ -33,10 +37,21 @@ const HomePageComponent = () => {
         queryFn: () => specializationAPI.getRecommendation()
     });
 
+    const {
+        data: dataDoctor,
+        isLoading: loadingDoctor,
+        refetch: refetchDoctor
+    } = useQuery({
+        queryKey: ['doctor-recommendation'],
+        queryFn: () => doctorAPI.getRecommendation()
+    });
+
     const onRefresh = async () => {
         setRefreshing(() => true);
 
         await refetchSpecialization();
+
+        await refetchDoctor();
 
         setRefreshing(() => false);
     };
@@ -59,7 +74,9 @@ const HomePageComponent = () => {
                         flexDirection: 'column',
                         paddingTop: 8,
                         paddingHorizontal: 24,
-                        gap: 48
+                        gap: 48,
+                        backgroundColor: 'white',
+                        paddingBottom: 32
                     }}
                 >
                     <View
@@ -182,6 +199,36 @@ const HomePageComponent = () => {
                                 </CustomText>
                             </TouchableOpacity>
                         </View>
+
+                        {!loadingDoctor ? (
+                            <FlatList
+                                data={dataDoctor?.data ?? []}
+                                renderItem={({ item, index }) => (
+                                    <DoctorItem data={item} index={index} />
+                                )}
+                                keyExtractor={(item) => item.id.toString()}
+                                showsVerticalScrollIndicator={false}
+                                showsHorizontalScrollIndicator={false}
+                                ItemSeparatorComponent={() => (
+                                    <View style={{ height: 24 }} />
+                                )}
+                                scrollEnabled={false}
+                            />
+                        ) : (
+                            <View
+                                style={{
+                                    width: '100%',
+                                    height: 100,
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}
+                            >
+                                <ActivityIndicator
+                                    size='large'
+                                    color={colors.primaryBlue}
+                                />
+                            </View>
+                        )}
                     </View>
                 </ScrollView>
             </CustomKeyboardAwareScrollView>
