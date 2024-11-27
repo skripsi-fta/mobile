@@ -1,3 +1,4 @@
+import { CustomText } from '@/presentation/components/CustomText';
 import {
     createContext,
     useState,
@@ -47,17 +48,19 @@ export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
         <ModalContext.Provider value={{ openModal, closeModal }}>
             {children}
             {isOpen && content && loaded && (
-                <Modal
-                    isVisible={isOpen}
-                    onBackdropPress={() => {
-                        if (dialogParams?.disableClickOutside) {
-                            closeModal();
-                        }
-                    }}
-                    propagateSwipe
-                >
-                    {content}
-                </Modal>
+                <View>
+                    <Modal
+                        isVisible={isOpen}
+                        onBackdropPress={() => {
+                            if (dialogParams?.disableClickOutside) {
+                                closeModal();
+                            }
+                        }}
+                        propagateSwipe
+                    >
+                        {content}
+                    </Modal>
+                </View>
             )}
         </ModalContext.Provider>
     );
