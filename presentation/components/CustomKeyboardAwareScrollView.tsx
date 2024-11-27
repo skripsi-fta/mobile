@@ -3,6 +3,7 @@ import {
     Platform,
     SafeAreaView,
     SafeAreaViewBase,
+    type RefreshControlProps,
     type StyleProp,
     type ViewStyle
 } from 'react-native';
@@ -11,12 +12,14 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 type Props = PropsWithChildren<{
     containerStyle?: StyleProp<ViewStyle>;
     fullHeight?: boolean;
+    refreshControl?: React.ReactElement<RefreshControlProps>;
 }>;
 
 const CustomKeyboardAwareScrollView = ({
     children,
     containerStyle,
-    fullHeight
+    fullHeight,
+    refreshControl
 }: Props) => {
     return (
         <>
@@ -36,6 +39,7 @@ const CustomKeyboardAwareScrollView = ({
                 ]}
                 contentInsetAdjustmentBehavior='automatic'
                 enableOnAndroid={true}
+                refreshControl={refreshControl}
                 enableAutomaticScroll={Platform.OS === 'ios'}
             >
                 <SafeAreaView>{children}</SafeAreaView>

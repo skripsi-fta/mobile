@@ -45,7 +45,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const navigation = useNavigation();
 
     const http = axios.create({
-        baseURL: `${process.env.EXPO_PUBLIC_API_URL}`,
+        baseURL: `${process.env.EXPO_PUBLIC_API_URL}/mobile`,
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json'
