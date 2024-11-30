@@ -13,6 +13,10 @@ export default function TabLayout() {
 
     const segments = useSegments();
 
+    const hideBottomBar = useMemo(() => {
+        if (segments.length > 2) return true;
+    }, [segments]);
+
     const nestedHomePageOpened = useMemo(() => {
         return (
             segments.length > 2 &&
@@ -36,7 +40,8 @@ export default function TabLayout() {
             screenOptions={{
                 headerShown: false,
                 tabBarInactiveTintColor: '#717173',
-                tabBarActiveTintColor: colors.primaryBlue
+                tabBarActiveTintColor: colors.primaryBlue,
+                tabBarStyle: hideBottomBar ? { display: 'none' } : {}
             }}
         >
             <Tabs.Screen

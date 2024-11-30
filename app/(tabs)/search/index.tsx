@@ -1,21 +1,7 @@
-import { CustomText } from '@/presentation/components/CustomText';
-import { View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import SearchPageComponent from '@/presentation/screens/search/Component';
 
 const SearchPage = () => {
-    const insets = useSafeAreaInsets();
-
-    return (
-        <View
-            style={{
-                flex: 1,
-                paddingTop: insets.top + 8,
-                paddingHorizontal: 16
-            }}
-        >
-            <CustomText>Search Page</CustomText>
-        </View>
-    );
+    return <SearchPageComponent />;
 };
 
 export default SearchPage;
