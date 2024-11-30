@@ -21,6 +21,11 @@ import { useInfiniteQuery } from 'react-query';
 import DoctorComponent from './DoctorComponent';
 import { SpesialisasiAPI } from '@/infrastructure/usecase/spesialisasi';
 import SpesialisasiComponent from './SpesialisasiComponent';
+import { ScheduleAPI } from '@/infrastructure/usecase/schedule';
+import dayjsUtils from '@/utils/dayjs';
+import ScheduleComponent from './ScheduleComponent';
+import { useModal } from '@/providers/ModalProvider';
+import SearchDate from './Component/SearchDate';
 
 const SearchPageComponent = () => {
     const { http } = useAuth();
@@ -34,6 +39,8 @@ const SearchPageComponent = () => {
     const doctorAPI = new DoctorAPI(http);
 
     const specializationAPI = new SpesialisasiAPI(http);
+
+    const scheduleAPI = new ScheduleAPI(http);
 
     const [refreshing, setRefreshing] = useState<boolean>(false);
 
@@ -85,6 +92,36 @@ const SearchPageComponent = () => {
         enabled: stepper === 'spesialisasi'
     });
 
+    const [dateParam, setDateParam] = useState<{
+        startDate: string;
+        endDate?: string;
+    }>({
+        startDate: dayjsUtils().format('YYYY-MM-DD')
+    });
+
+    const {
+        data: dataSchedule,
+        fetchNextPage: fetchNextPageSchedule,
+        hasNextPage: hasNextPageSchedule,
+        isFetchingNextPage: isFetchingNextPageSchedule,
+        refetch: refetchSchedule
+    } = useInfiniteQuery({
+        queryKey: ['schedule-list', dateParam],
+        queryFn: ({ pageParam = 1 }) => {
+            return scheduleAPI.getSchedule({
+                pageNumber: Number(pageParam),
+                pageSize: 10,
+                startDate: dateParam.startDate,
+                endDate: dateParam.endDate
+            });
+        },
+        getNextPageParam: (lastPage) =>
+            lastPage.currentPage < lastPage.totalPages
+                ? lastPage.currentPage + 1
+                : undefined,
+        enabled: stepper === 'jadwal'
+    });
+
     const onRefresh = async () => {
         setRefreshing(() => true);
 
@@ -92,6 +129,8 @@ const SearchPageComponent = () => {
             await refetchDoctor();
         } else if (stepper === 'spesialisasi') {
             await refetchSpesialisasi();
+        } else if (stepper === 'jadwal') {
+            await refetchSchedule();
         }
 
         setRefreshing(() => false);
@@ -102,6 +141,9 @@ const SearchPageComponent = () => {
     const spesialisasiData =
         dataSpesialisasi?.pages?.flatMap((page) => page.data) ?? [];
 
+    const scheduleData =
+        dataSchedule?.pages?.flatMap((page) => page.data) ?? [];
+
     const fetchDoctorInfinite = () => {
         if (hasNextPageDoctor && !isFetchingNextPageDoctor) {
             fetchNextPageDoctor();
@@ -111,6 +153,12 @@ const SearchPageComponent = () => {
     const fetchSpesialisasiInfinite = () => {
         if (hasNextPageSpesialisasi && !isFetchingNextPageSpesialisasi) {
             fetchNextPageSpesialisasi();
+        }
+    };
+
+    const fetchScheduleInfinite = () => {
+        if (hasNextPageSchedule && !isFetchingNextPageSchedule) {
+            fetchNextPageSchedule();
         }
     };
 
@@ -132,6 +180,8 @@ const SearchPageComponent = () => {
                         fetchDoctorInfinite();
                     } else if (stepper === 'spesialisasi') {
                         fetchSpesialisasiInfinite();
+                    } else if (stepper === 'jadwal') {
+                        fetchScheduleInfinite();
                     }
                 }
             }, 50);
@@ -145,6 +195,17 @@ const SearchPageComponent = () => {
         setStepper(() => name);
 
         setName(() => '');
+
+        setDateParam(() => ({ startDate: dayjsUtils().format('YYYY-MM-DD') }));
+    };
+
+    const { openModal } = useModal();
+
+    const handleOpenModalSearchDate = () => {
+        openModal(
+            <SearchDate dateParam={dateParam} setDateParam={setDateParam} />,
+            { disableClickOutside: false }
+        );
     };
 
     return (
@@ -179,21 +240,30 @@ const SearchPageComponent = () => {
                         Cari Dokter/Spesialis
                     </CustomText>
 
-                    <TextInput
-                        inputMode='text'
-                        style={{
-                            borderColor: colors.primaryBlue,
-                            color: 'black',
-                            height: 50,
-                            marginTop: 16,
-                            width: '100%',
-                            borderRadius: 20
-                        }}
-                        onEndEditing={(e) => {
-                            setName(() => e.nativeEvent.text);
-                        }}
-                        placeholder='Cari'
-                        customIcon={
+                    {stepper === 'jadwal' ? (
+                        <TouchableOpacity
+                            style={{
+                                borderColor: colors.primaryBlue,
+                                height: 50,
+                                marginTop: 16,
+                                width: '100%',
+                                borderRadius: 20,
+                                flex: 1,
+                                padding: 8,
+                                borderWidth: 1,
+                                justifyContent: 'center',
+                                position: 'relative'
+                            }}
+                            onPress={handleOpenModalSearchDate}
+                        >
+                            <CustomText
+                                style={{
+                                    color: '#888888',
+                                    fontSize: 14
+                                }}
+                            >
+                                Pilih Tanggal
+                            </CustomText>
                             <View
                                 style={{
                                     position: 'absolute',
@@ -214,8 +284,46 @@ const SearchPageComponent = () => {
                                     color='white'
                                 />
                             </View>
-                        }
-                    />
+                        </TouchableOpacity>
+                    ) : (
+                        <TextInput
+                            inputMode='text'
+                            style={{
+                                borderColor: colors.primaryBlue,
+                                color: 'black',
+                                height: 50,
+                                marginTop: 16,
+                                width: '100%',
+                                borderRadius: 20
+                            }}
+                            onEndEditing={(e) => {
+                                setName(() => e.nativeEvent.text);
+                            }}
+                            placeholder='Cari'
+                            customIcon={
+                                <View
+                                    style={{
+                                        position: 'absolute',
+                                        right: 0,
+                                        display: 'flex',
+                                        backgroundColor: colors.primaryBlue,
+                                        height: 50,
+                                        bottom: 0,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        width: 60,
+                                        borderRadius: 20
+                                    }}
+                                >
+                                    <CustomIcons
+                                        type='ant-design'
+                                        name='search1'
+                                        color='white'
+                                    />
+                                </View>
+                            }
+                        />
+                    )}
 
                     <View
                         style={{
@@ -307,6 +415,16 @@ const SearchPageComponent = () => {
                                 isFetchingNextPageSpesialisasi
                             }
                             spesialisasiData={spesialisasiData}
+                        />
+                    )}
+
+                    {stepper === 'jadwal' && (
+                        <ScheduleComponent
+                            isFetchingNextPageSchedule={
+                                isFetchingNextPageSchedule
+                            }
+                            scheduleData={scheduleData}
+                            dateParam={dateParam}
                         />
                     )}
                 </View>

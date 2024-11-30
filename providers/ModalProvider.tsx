@@ -52,7 +52,7 @@ export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
                     <Modal
                         isVisible={isOpen}
                         onBackdropPress={() => {
-                            if (dialogParams?.disableClickOutside) {
+                            if (!dialogParams?.disableClickOutside) {
                                 closeModal();
                             }
                         }}
