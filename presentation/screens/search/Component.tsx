@@ -18,6 +18,9 @@ import {
     ActivityIndicator
 } from 'react-native';
 import { useInfiniteQuery } from 'react-query';
+import DoctorComponent from './DoctorComponent';
+import { SpesialisasiAPI } from '@/infrastructure/usecase/spesialisasi';
+import SpesialisasiComponent from './SpesialisasiComponent';
 
 const SearchPageComponent = () => {
     const { http } = useAuth();
@@ -29,6 +32,8 @@ const SearchPageComponent = () => {
     >('doctor');
 
     const doctorAPI = new DoctorAPI(http);
+
+    const specializationAPI = new SpesialisasiAPI(http);
 
     const [refreshing, setRefreshing] = useState<boolean>(false);
 
@@ -58,11 +63,35 @@ const SearchPageComponent = () => {
         enabled: stepper === 'doctor'
     });
 
+    const {
+        data: dataSpesialisasi,
+        fetchNextPage: fetchNextPageSpesialisasi,
+        hasNextPage: hasNextPageSpesialisasi,
+        isFetchingNextPage: isFetchingNextPageSpesialisasi,
+        refetch: refetchSpesialisasi
+    } = useInfiniteQuery({
+        queryKey: ['spesialisasi-list', name],
+        queryFn: ({ pageParam = 1 }) => {
+            return specializationAPI.getSpecialization({
+                pageNumber: Number(pageParam),
+                pageSize: 18,
+                name
+            });
+        },
+        getNextPageParam: (lastPage) =>
+            lastPage.currentPage < lastPage.totalPages
+                ? lastPage.currentPage + 1
+                : undefined,
+        enabled: stepper === 'spesialisasi'
+    });
+
     const onRefresh = async () => {
         setRefreshing(() => true);
 
         if (stepper === 'doctor') {
             await refetchDoctor();
+        } else if (stepper === 'spesialisasi') {
+            await refetchSpesialisasi();
         }
 
         setRefreshing(() => false);
@@ -70,9 +99,18 @@ const SearchPageComponent = () => {
 
     const doctorData = dataDoctor?.pages?.flatMap((page) => page.data) ?? [];
 
+    const spesialisasiData =
+        dataSpesialisasi?.pages?.flatMap((page) => page.data) ?? [];
+
     const fetchDoctorInfinite = () => {
         if (hasNextPageDoctor && !isFetchingNextPageDoctor) {
             fetchNextPageDoctor();
+        }
+    };
+
+    const fetchSpesialisasiInfinite = () => {
+        if (hasNextPageSpesialisasi && !isFetchingNextPageSpesialisasi) {
+            fetchNextPageSpesialisasi();
         }
     };
 
@@ -92,6 +130,8 @@ const SearchPageComponent = () => {
                 ) {
                     if (stepper === 'doctor') {
                         fetchDoctorInfinite();
+                    } else if (stepper === 'spesialisasi') {
+                        fetchSpesialisasiInfinite();
                     }
                 }
             }, 50);
@@ -252,41 +292,22 @@ const SearchPageComponent = () => {
 
                     {stepper === 'doctor' && (
                         <>
-                            <CustomText
-                                style={{
-                                    marginTop: 32,
-                                    marginBottom: 24,
-                                    fontSize: 22,
-                                    fontFamily: 'Poppins-Medium'
-                                }}
-                            >
-                                Dokter Popular
-                            </CustomText>
-                            <FlatList
-                                data={doctorData}
-                                renderItem={({ item, index }) => (
-                                    <DoctorItem data={item} index={index} />
-                                )}
-                                keyExtractor={(item) => item.id.toString()}
-                                showsVerticalScrollIndicator={false}
-                                showsHorizontalScrollIndicator={false}
-                                ItemSeparatorComponent={() => (
-                                    <View style={{ height: 24 }} />
-                                )}
-                                scrollEnabled={false}
-                                ListFooterComponent={() => (
-                                    <>
-                                        {isFetchingNextPageDoctor && (
-                                            <ActivityIndicator
-                                                style={{ marginTop: 24 }}
-                                                color={colors.primaryBlue}
-                                                size={'large'}
-                                            />
-                                        )}
-                                    </>
-                                )}
+                            <DoctorComponent
+                                doctorData={doctorData}
+                                isFetchingNextPageDoctor={
+                                    isFetchingNextPageDoctor
+                                }
                             />
                         </>
+                    )}
+
+                    {stepper === 'spesialisasi' && (
+                        <SpesialisasiComponent
+                            isFetchingNextPageSpesialisasi={
+                                isFetchingNextPageSpesialisasi
+                            }
+                            spesialisasiData={spesialisasiData}
+                        />
                     )}
                 </View>
             </CustomKeyboardAwareScrollView>

@@ -8,15 +8,13 @@ export class SpesialisasiAPI {
         this.api = api;
     }
 
-    async getRecommendation(
-        body?: SpesialisasiModel.Request.Recommendation
-    ): Promise<SpesialisasiModel.Response.Recommendation> {
-        const data =
-            await this.api.get<SpesialisasiModel.Response.Recommendation>(
-                '/specialization/recommendation',
-                { params: body }
-            );
+    async getSpecialization(
+        body: SpesialisasiModel.Request.List
+    ): Promise<SpesialisasiModel.Response.List> {
+        const data = await this.api.get('/specialization', {
+            params: body
+        });
 
-        return data.data;
+        return data.data.data;
     }
 }

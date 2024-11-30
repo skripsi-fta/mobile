@@ -34,7 +34,8 @@ const HomePageComponent = () => {
         refetch: refetchSpecialization
     } = useQuery({
         queryKey: ['specialization-recommendation'],
-        queryFn: () => specializationAPI.getRecommendation()
+        queryFn: () =>
+            specializationAPI.getSpecialization({ pageNumber: 1, pageSize: 6 })
     });
 
     const {
@@ -43,7 +44,7 @@ const HomePageComponent = () => {
         refetch: refetchDoctor
     } = useQuery({
         queryKey: ['doctor-recommendation'],
-        queryFn: () => doctorAPI.getRecommendation()
+        queryFn: () => doctorAPI.getDoctor({ pageNumber: 1, pageSize: 3 })
     });
 
     const onRefresh = async () => {

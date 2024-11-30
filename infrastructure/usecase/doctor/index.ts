@@ -8,17 +8,6 @@ export class DoctorAPI {
         this.api = api;
     }
 
-    async getRecommendation(
-        body?: DoctorModel.Request.Recommendation
-    ): Promise<DoctorModel.Response.Recommendation> {
-        const data = await this.api.get<DoctorModel.Response.Recommendation>(
-            '/doctor/recommendation',
-            { params: body }
-        );
-
-        return data.data;
-    }
-
     async getDoctor(
         body: DoctorModel.Request.List
     ): Promise<DoctorModel.Response.List> {
