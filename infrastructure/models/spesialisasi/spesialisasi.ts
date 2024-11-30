@@ -3,6 +3,12 @@ export namespace SpesialisasiModel {
         export interface Recommendation {
             total?: number;
         }
+
+        export interface List {
+            name?: string;
+            pageSize: number;
+            pageNumber: number;
+        }
     }
 
     export namespace Response {
@@ -16,6 +22,13 @@ export namespace SpesialisasiModel {
 
         export interface Recommendation {
             message: string;
+            data: Data[];
+        }
+
+        export interface List {
+            currentPage: number;
+            totalPages: number;
+            totalRows: number;
             data: Data[];
         }
     }

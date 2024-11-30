@@ -5,9 +5,14 @@ import { CustomText } from '../CustomText';
 interface SpesialisasiItemProps {
     data: SpesialisasiModel.Response.Data;
     index: number;
+    direction?: 'vertical' | 'horizontal';
 }
 
-const SpesialisasiItem = ({ data, index }: SpesialisasiItemProps) => {
+const SpesialisasiItem = ({
+    data,
+    index,
+    direction = 'horizontal'
+}: SpesialisasiItemProps) => {
     return (
         <>
             <TouchableOpacity
@@ -16,16 +21,20 @@ const SpesialisasiItem = ({ data, index }: SpesialisasiItemProps) => {
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'center',
-                        gap: 8
+                        alignItems: 'center',
+                        gap: 8,
+                        flex: 1
                     },
-                    index === 0
-                        ? {
-                              marginRight: 16
-                          }
-                        : {
-                              marginLeft: 16,
-                              marginRight: 16
-                          }
+                    direction === 'horizontal'
+                        ? index === 0
+                            ? {
+                                  marginRight: 16
+                              }
+                            : {
+                                  marginLeft: 16,
+                                  marginRight: 16
+                              }
+                        : { marginBottom: 4 }
                 ]}
             >
                 <View
