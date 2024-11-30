@@ -5,7 +5,9 @@ import {
     SafeAreaViewBase,
     type RefreshControlProps,
     type StyleProp,
-    type ViewStyle
+    type ViewStyle,
+    type NativeSyntheticEvent,
+    type NativeScrollEvent
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -13,13 +15,15 @@ type Props = PropsWithChildren<{
     containerStyle?: StyleProp<ViewStyle>;
     fullHeight?: boolean;
     refreshControl?: React.ReactElement<RefreshControlProps>;
+    onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 }>;
 
 const CustomKeyboardAwareScrollView = ({
     children,
     containerStyle,
     fullHeight,
-    refreshControl
+    refreshControl,
+    onScroll
 }: Props) => {
     return (
         <>
@@ -41,6 +45,7 @@ const CustomKeyboardAwareScrollView = ({
                 enableOnAndroid={true}
                 refreshControl={refreshControl}
                 enableAutomaticScroll={Platform.OS === 'ios'}
+                onScroll={onScroll}
             >
                 <SafeAreaView>{children}</SafeAreaView>
             </KeyboardAwareScrollView>

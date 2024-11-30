@@ -1,6 +1,6 @@
 import { colors } from '@/constants/colors';
 import { useAuth } from '@/contexts/AuthContext';
-import { DoctorAPi } from '@/infrastructure/usecase/doctor';
+import { DoctorAPI } from '@/infrastructure/usecase/doctor';
 import { SpesialisasiAPI } from '@/infrastructure/usecase/spesialisasi';
 import CustomKeyboardAwareScrollView from '@/presentation/components/CustomKeyboardAwareScrollView';
 import { CustomText } from '@/presentation/components/CustomText';
@@ -24,7 +24,7 @@ const HomePageComponent = () => {
 
     const specializationAPI = new SpesialisasiAPI(http);
 
-    const doctorAPI = new DoctorAPi(http);
+    const doctorAPI = new DoctorAPI(http);
 
     const [refreshing, setRefreshing] = useState<boolean>(false);
 
