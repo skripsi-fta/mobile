@@ -136,7 +136,16 @@ const HomePageComponent = () => {
                                 Rekomendasi Poli
                             </CustomText>
 
-                            <TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() =>
+                                    router.push({
+                                        pathname: '/search',
+                                        params: {
+                                            typeInit: 'spesialisasi'
+                                        }
+                                    })
+                                }
+                            >
                                 <CustomText
                                     style={{ color: '#888888', fontSize: 12 }}
                                 >
@@ -205,7 +214,16 @@ const HomePageComponent = () => {
                                 Rekomendasi Dokter
                             </CustomText>
 
-                            <TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() =>
+                                    router.push({
+                                        pathname: '/search',
+                                        params: {
+                                            typeInit: 'doctor'
+                                        }
+                                    })
+                                }
+                            >
                                 <CustomText
                                     style={{ color: '#888888', fontSize: 12 }}
                                 >

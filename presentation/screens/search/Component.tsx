@@ -5,7 +5,7 @@ import { CustomIcons } from '@/presentation/components/CustomIcons';
 import CustomKeyboardAwareScrollView from '@/presentation/components/CustomKeyboardAwareScrollView';
 import { CustomText } from '@/presentation/components/CustomText';
 import { TextInput } from '@/presentation/components/CustomTextInput';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
     RefreshControl,
     StyleSheet,
@@ -23,15 +23,26 @@ import dayjsUtils from '@/utils/dayjs';
 import ScheduleComponent from './ScheduleComponent';
 import { useModal } from '@/providers/ModalProvider';
 import SearchDate from './Component/SearchDate';
+import { useLocalSearchParams } from 'expo-router';
 
 const SearchPageComponent = () => {
+    const { typeInit } = useLocalSearchParams() as unknown as {
+        typeInit?: 'doctor' | 'spesialisasi' | 'jadwal';
+    };
+
     const { http } = useAuth();
 
     const [name, setName] = useState<string>('');
 
     const [stepper, setStepper] = useState<
         'doctor' | 'spesialisasi' | 'jadwal'
-    >('doctor');
+    >(typeInit || 'doctor');
+
+    useEffect(() => {
+        if (typeInit && stepper !== typeInit) {
+            setStepper(() => typeInit);
+        }
+    }, [typeInit, stepper]);
 
     const doctorAPI = new DoctorAPI(http);
 
