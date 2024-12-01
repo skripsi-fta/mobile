@@ -2,7 +2,8 @@ import { colors } from '@/constants/colors';
 import type { SpesialisasiModel } from '@/infrastructure/models/spesialisasi/spesialisasi';
 import { CustomText } from '@/presentation/components/CustomText';
 import SpesialisasiItem from '@/presentation/components/spesialisasi/SpesialisasiItem';
-import { ActivityIndicator, FlatList, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { ActivityIndicator, FlatList, Image, View } from 'react-native';
 
 interface SpesialisasiComponentProps {
     spesialisasiData: SpesialisasiModel.Response.Data[];
@@ -13,6 +14,8 @@ const SpesialisasiComponent = ({
     isFetchingNextPageSpesialisasi,
     spesialisasiData
 }: SpesialisasiComponentProps) => {
+    const router = useRouter();
+
     return (
         <>
             <CustomText
@@ -26,33 +29,69 @@ const SpesialisasiComponent = ({
                 Spesialisasi Popular
             </CustomText>
 
-            <FlatList
-                data={spesialisasiData}
-                renderItem={({ item, index }) => (
-                    <SpesialisasiItem
-                        data={item}
-                        index={index}
-                        direction='vertical'
+            {spesialisasiData.length === 0 ? (
+                <View
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 4
+                    }}
+                >
+                    <Image
+                        source={require('@/assets/images/not-found.png')}
+                        style={{ width: 100, height: 100 }}
                     />
-                )}
-                keyExtractor={(item) => item.id.toString()}
-                showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}
-                ItemSeparatorComponent={() => <View style={{ height: 24 }} />}
-                scrollEnabled={false}
-                numColumns={3}
-                ListFooterComponent={() => (
-                    <>
-                        {isFetchingNextPageSpesialisasi && (
-                            <ActivityIndicator
-                                style={{ marginTop: 24 }}
-                                color={colors.primaryBlue}
-                                size={'large'}
-                            />
-                        )}
-                    </>
-                )}
-            />
+                    <CustomText
+                        style={{
+                            color: colors.primaryBlue,
+                            fontFamily: 'Poppins-SemiBold'
+                        }}
+                    >
+                        Data tidak ditemukan
+                    </CustomText>
+                </View>
+            ) : (
+                <FlatList
+                    data={spesialisasiData}
+                    renderItem={({ item, index }) => (
+                        <SpesialisasiItem
+                            data={item}
+                            index={index}
+                            direction='vertical'
+                            onClick={() => {
+                                router.push({
+                                    pathname: '/(tabs)/search/spesialisasi',
+                                    params: {
+                                        spesialisasiId: item.id,
+                                        spesialisasiName: item.name
+                                    }
+                                });
+                            }}
+                        />
+                    )}
+                    keyExtractor={(item) => item.id.toString()}
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                    ItemSeparatorComponent={() => (
+                        <View style={{ height: 24 }} />
+                    )}
+                    scrollEnabled={false}
+                    numColumns={3}
+                    ListFooterComponent={() => (
+                        <>
+                            {isFetchingNextPageSpesialisasi && (
+                                <ActivityIndicator
+                                    style={{ marginTop: 24 }}
+                                    color={colors.primaryBlue}
+                                    size={'large'}
+                                />
+                            )}
+                        </>
+                    )}
+                />
+            )}
         </>
     );
 };

@@ -4,7 +4,7 @@ import { CustomText } from '@/presentation/components/CustomText';
 import ScheduleItem from '@/presentation/components/schedule/ScheduleItem';
 import dayjsUtils from '@/utils/dayjs';
 import dayjs from 'dayjs';
-import { ActivityIndicator, FlatList, View } from 'react-native';
+import { ActivityIndicator, FlatList, Image, View } from 'react-native';
 
 interface ScheduleComponentProps {
     scheduleData: ScheduleModel.Response.Data[];
@@ -46,28 +46,55 @@ const ScheduleComponent = ({
                     )}`}
             </CustomText>
 
-            <FlatList
-                data={scheduleData}
-                renderItem={({ item }) => (
-                    <ScheduleItem data={item} type='list' />
-                )}
-                keyExtractor={(item) => item.id.toString()}
-                showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}
-                ItemSeparatorComponent={() => <View style={{ height: 24 }} />}
-                scrollEnabled={false}
-                ListFooterComponent={() => (
-                    <>
-                        {isFetchingNextPageSchedule && (
-                            <ActivityIndicator
-                                style={{ marginTop: 24 }}
-                                color={colors.primaryBlue}
-                                size={'large'}
-                            />
-                        )}
-                    </>
-                )}
-            />
+            {scheduleData.length === 0 ? (
+                <View
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 4
+                    }}
+                >
+                    <Image
+                        source={require('@/assets/images/not-found.png')}
+                        style={{ width: 100, height: 100 }}
+                    />
+                    <CustomText
+                        style={{
+                            color: colors.primaryBlue,
+                            fontFamily: 'Poppins-SemiBold'
+                        }}
+                    >
+                        Data tidak ditemukan
+                    </CustomText>
+                </View>
+            ) : (
+                <FlatList
+                    data={scheduleData}
+                    renderItem={({ item }) => (
+                        <ScheduleItem data={item} type='list' />
+                    )}
+                    keyExtractor={(item) => item.id.toString()}
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                    ItemSeparatorComponent={() => (
+                        <View style={{ height: 24 }} />
+                    )}
+                    scrollEnabled={false}
+                    ListFooterComponent={() => (
+                        <>
+                            {isFetchingNextPageSchedule && (
+                                <ActivityIndicator
+                                    style={{ marginTop: 24 }}
+                                    color={colors.primaryBlue}
+                                    size={'large'}
+                                />
+                            )}
+                        </>
+                    )}
+                />
+            )}
         </>
     );
 };
