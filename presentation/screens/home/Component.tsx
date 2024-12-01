@@ -7,6 +7,7 @@ import { CustomText } from '@/presentation/components/CustomText';
 import { HelloWave } from '@/presentation/components/HelloWave';
 import DoctorItem from '@/presentation/components/doctor/DoctorItem';
 import SpesialisasiItem from '@/presentation/components/spesialisasi/SpesialisasiItem';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
     ActivityIndicator,
@@ -56,6 +57,8 @@ const HomePageComponent = () => {
 
         setRefreshing(() => false);
     };
+
+    const router = useRouter();
 
     return (
         <>
@@ -150,6 +153,16 @@ const HomePageComponent = () => {
                                     <SpesialisasiItem
                                         data={item}
                                         index={index}
+                                        onClick={() => {
+                                            router.push({
+                                                pathname:
+                                                    '/search/spesialisasi',
+                                                params: {
+                                                    spesialisasiId: item.id,
+                                                    spesialisasiName: item.name
+                                                }
+                                            });
+                                        }}
                                     />
                                 )}
                                 keyExtractor={(item) => item.id.toString()}

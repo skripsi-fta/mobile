@@ -7,7 +7,8 @@ const SpesialisasiPage = () => {
         <>
             <Stack.Screen
                 options={{
-                    headerShown: false
+                    headerShown: false,
+                    fullScreenGestureEnabled: true
                 }}
             />
 

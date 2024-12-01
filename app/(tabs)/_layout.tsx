@@ -1,10 +1,9 @@
-import { Tabs, useNavigation, usePathname, useSegments } from 'expo-router';
+import { Tabs, useNavigation, useSegments } from 'expo-router';
 import React, { useEffect, useMemo } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { colors } from '@/constants/colors';
 import { CustomIcons } from '@/presentation/components/CustomIcons';
 import { useModal } from '@/providers/ModalProvider';
-import NoticeModal from '@/presentation/screens/profile/patient/Components/NoticeModal';
 
 export default function TabLayout() {
     const { isAuthenticated, user } = useAuth();
@@ -12,10 +11,6 @@ export default function TabLayout() {
     const navigation = useNavigation();
 
     const segments = useSegments();
-
-    const hideBottomBar = useMemo(() => {
-        if (segments.length > 2) return true;
-    }, [segments]);
 
     const nestedHomePageOpened = useMemo(() => {
         return (
@@ -30,7 +25,7 @@ export default function TabLayout() {
     useEffect(() => {
         if (user?.user && navigation.isFocused()) {
             if (!user.user.patient) {
-                openModal(<NoticeModal />, {});
+                // openModal(<NoticeModal />, { disableClickOutside: true });
             }
         }
     }, [user, navigation.isFocused()]);
@@ -40,8 +35,7 @@ export default function TabLayout() {
             screenOptions={{
                 headerShown: false,
                 tabBarInactiveTintColor: '#717173',
-                tabBarActiveTintColor: colors.primaryBlue,
-                tabBarStyle: hideBottomBar ? { display: 'none' } : {}
+                tabBarActiveTintColor: colors.primaryBlue
             }}
         >
             <Tabs.Screen
@@ -68,12 +62,13 @@ export default function TabLayout() {
                             name={focused ? 'search' : 'search-outline'}
                             color={color}
                         />
-                    )
+                    ),
+                    headerShown: false
                 }}
             />
 
             <Tabs.Screen
-                name='appointment/index'
+                name='appointment'
                 options={{
                     title: 'Janji Temu',
                     tabBarIcon: ({ color, focused }) => (

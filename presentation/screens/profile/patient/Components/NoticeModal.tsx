@@ -66,7 +66,7 @@ const NoticeModal = () => {
                         }}
                         onPress={() => {
                             closeModal();
-                            router.push('/(tabs)/profile/link');
+                            router.push('/profile/link');
                         }}
                     >
                         <CustomText
@@ -88,7 +88,7 @@ const NoticeModal = () => {
                         }}
                         onPress={() => {
                             closeModal();
-                            router.push('/(tabs)/profile/new');
+                            router.push('/profile/new');
                         }}
                     >
                         <CustomText

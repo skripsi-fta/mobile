@@ -62,7 +62,7 @@ const SpesialisasiComponent = ({
                             direction='vertical'
                             onClick={() => {
                                 router.push({
-                                    pathname: '/(tabs)/search/spesialisasi',
+                                    pathname: '/search/spesialisasi',
                                     params: {
                                         spesialisasiId: item.id,
                                         spesialisasiName: item.name

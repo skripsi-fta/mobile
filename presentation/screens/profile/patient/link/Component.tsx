@@ -20,7 +20,6 @@ import { useNavigation } from 'expo-router';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useMutation } from 'react-query';
 
 const LinkPatientComponent = () => {
@@ -96,20 +95,21 @@ const LinkPatientComponent = () => {
         <>
             {(isLoading || isLoadingLinkPatient) && <LoadingOverlay />}
 
-            <SafeAreaView
-                style={{
-                    flex: 1,
-                    paddingHorizontal: 24,
+            <CustomKeyboardAwareScrollView
+                containerStyle={{
                     backgroundColor: 'white'
                 }}
             >
-                <CustomKeyboardAwareScrollView
-                    containerStyle={{
+                <View
+                    style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: 24
+                        gap: 24,
+                        paddingTop: 8,
+                        paddingHorizontal: 24,
+                        backgroundColor: 'white',
+                        paddingBottom: 32
                     }}
-                    fullHeight
                 >
                     <View
                         style={{
@@ -419,8 +419,8 @@ const LinkPatientComponent = () => {
                             </>
                         )}
                     </View>
-                </CustomKeyboardAwareScrollView>
-            </SafeAreaView>
+                </View>
+            </CustomKeyboardAwareScrollView>
         </>
     );
 };

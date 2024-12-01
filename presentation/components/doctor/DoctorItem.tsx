@@ -3,6 +3,7 @@ import { TouchableOpacity, View } from 'react-native';
 import { CustomText } from '../CustomText';
 import { CustomIcons } from '../CustomIcons';
 import CustomImage from '../CustomImage';
+import { useRouter } from 'expo-router';
 
 interface DoctorItemProps {
     data: DoctorModel.Response.Data;
@@ -20,8 +21,19 @@ const formatNumber = (num: number) => {
 };
 
 const DoctorItem = ({ data }: DoctorItemProps) => {
+    const router = useRouter();
+
     return (
-        <TouchableOpacity>
+        <TouchableOpacity
+            onPress={() => {
+                router.push({
+                    pathname: '/search/dokter',
+                    params: {
+                        data: JSON.stringify(data)
+                    }
+                });
+            }}
+        >
             <View
                 style={{
                     backgroundColor: 'white',

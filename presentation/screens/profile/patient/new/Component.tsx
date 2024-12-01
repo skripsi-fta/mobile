@@ -1,11 +1,7 @@
 import { CustomIcons } from '@/presentation/components/CustomIcons';
 import { CustomText } from '@/presentation/components/CustomText';
 import { useNavigation } from 'expo-router';
-import { ScrollView, TouchableOpacity, View } from 'react-native';
-import {
-    SafeAreaView,
-    useSafeAreaInsets
-} from 'react-native-safe-area-context';
+import { TouchableOpacity, View } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import {
     createPatientValidation,
@@ -19,7 +15,6 @@ import CustomDropdownPicker from '@/presentation/components/CustomDropdownPicker
 import { colors } from '@/constants/colors';
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { Calendar } from 'react-native-calendars';
 import CustomDatePicker from '@/presentation/components/CustomDatePicker';
 import { PatientAPI } from '@/infrastructure/usecase/patient';
 import { useMutation } from 'react-query';
@@ -80,20 +75,21 @@ const NewPatientComponent = () => {
         <>
             {isLoading && <LoadingOverlay />}
 
-            <SafeAreaView
-                style={{
-                    flex: 1,
-                    paddingHorizontal: 24,
+            <CustomKeyboardAwareScrollView
+                containerStyle={{
                     backgroundColor: 'white'
                 }}
             >
-                <CustomKeyboardAwareScrollView
-                    containerStyle={{
+                <View
+                    style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: 24
+                        gap: 24,
+                        paddingTop: 8,
+                        paddingHorizontal: 24,
+                        backgroundColor: 'white',
+                        paddingBottom: 32
                     }}
-                    fullHeight
                 >
                     <View
                         style={{
@@ -120,7 +116,6 @@ const NewPatientComponent = () => {
                             Daftar Pasien Baru
                         </CustomText>
                     </View>
-
                     <View
                         style={{
                             display: 'flex',
@@ -159,6 +154,7 @@ const NewPatientComponent = () => {
                                 )}
                             />
                         </View>
+
                         <View
                             style={{
                                 display: 'flex',
@@ -181,6 +177,15 @@ const NewPatientComponent = () => {
                                 )}
                             />
                         </View>
+                    </View>
+
+                    <View
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 24
+                        }}
+                    >
                         <View
                             style={{
                                 display: 'flex',
@@ -362,8 +367,8 @@ const NewPatientComponent = () => {
                             </CustomText>
                         </TouchableOpacity>
                     </View>
-                </CustomKeyboardAwareScrollView>
-            </SafeAreaView>
+                </View>
+            </CustomKeyboardAwareScrollView>
         </>
     );
 };

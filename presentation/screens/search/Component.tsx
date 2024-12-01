@@ -5,17 +5,14 @@ import { CustomIcons } from '@/presentation/components/CustomIcons';
 import CustomKeyboardAwareScrollView from '@/presentation/components/CustomKeyboardAwareScrollView';
 import { CustomText } from '@/presentation/components/CustomText';
 import { TextInput } from '@/presentation/components/CustomTextInput';
-import DoctorItem from '@/presentation/components/doctor/DoctorItem';
 import { useCallback, useState } from 'react';
 import {
-    FlatList,
     RefreshControl,
     StyleSheet,
     TouchableOpacity,
     View,
     type NativeSyntheticEvent,
-    type NativeScrollEvent,
-    ActivityIndicator
+    type NativeScrollEvent
 } from 'react-native';
 import { useInfiniteQuery } from 'react-query';
 import DoctorComponent from './DoctorComponent';
