@@ -6,6 +6,7 @@ export namespace DoctorModel {
 
         export interface List {
             name?: string;
+            spesialisasiId?: string;
             pageSize: number;
             pageNumber: number;
         }

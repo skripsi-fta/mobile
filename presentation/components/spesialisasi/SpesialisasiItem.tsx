@@ -6,16 +6,19 @@ interface SpesialisasiItemProps {
     data: SpesialisasiModel.Response.Data;
     index: number;
     direction?: 'vertical' | 'horizontal';
+    onClick?: () => void;
 }
 
 const SpesialisasiItem = ({
     data,
     index,
-    direction = 'horizontal'
+    direction = 'horizontal',
+    onClick
 }: SpesialisasiItemProps) => {
     return (
         <>
             <TouchableOpacity
+                onPress={onClick}
                 style={[
                     {
                         display: 'flex',
