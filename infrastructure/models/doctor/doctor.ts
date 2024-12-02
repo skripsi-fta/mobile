@@ -10,6 +10,10 @@ export namespace DoctorModel {
             pageSize: number;
             pageNumber: number;
         }
+
+        export interface Detail {
+            doctorId: number;
+        }
     }
 
     export namespace Response {
@@ -35,6 +39,19 @@ export namespace DoctorModel {
             totalPages: number;
             totalRows: number;
             data: Data[];
+        }
+
+        export interface Detail {
+            doctorData: Data;
+            scheduleData: {
+                [key: string]: {
+                    id: number;
+                    day: string;
+                    startTime: string;
+                    endTime: string;
+                    capacity: number;
+                }[];
+            };
         }
     }
 }

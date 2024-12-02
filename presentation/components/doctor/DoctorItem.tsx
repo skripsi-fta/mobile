@@ -10,7 +10,7 @@ interface DoctorItemProps {
     index: number;
 }
 
-const formatNumber = (num: number) => {
+export const formatNumberTotalPasien = (num: number) => {
     if (num < 100) {
         return num.toString();
     }
@@ -140,7 +140,7 @@ const DoctorItem = ({ data }: DoctorItemProps) => {
                                         fontFamily: 'Poppins-Bold'
                                     }}
                                 >
-                                    {formatNumber(data.totalPasien)}
+                                    {formatNumberTotalPasien(data.totalPasien)}
                                 </CustomText>
                             </View>
                         </View>

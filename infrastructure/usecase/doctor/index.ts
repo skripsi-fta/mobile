@@ -17,4 +17,14 @@ export class DoctorAPI {
 
         return data.data.data;
     }
+
+    async detail(
+        body: DoctorModel.Request.Detail
+    ): Promise<DoctorModel.Response.Detail> {
+        const data = await this.api.get('/doctor/detail', {
+            params: body
+        });
+
+        return data.data.data;
+    }
 }

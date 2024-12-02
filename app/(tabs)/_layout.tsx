@@ -4,6 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { colors } from '@/constants/colors';
 import { CustomIcons } from '@/presentation/components/CustomIcons';
 import { useModal } from '@/providers/ModalProvider';
+import NoticeModal from '@/presentation/screens/profile/patient/Components/NoticeModal';
 
 export default function TabLayout() {
     const { isAuthenticated, user } = useAuth();
@@ -25,7 +26,7 @@ export default function TabLayout() {
     useEffect(() => {
         if (user?.user && navigation.isFocused()) {
             if (!user.user.patient) {
-                // openModal(<NoticeModal />, { disableClickOutside: true });
+                openModal(<NoticeModal />, { disableClickOutside: true });
             }
         }
     }, [user, navigation.isFocused()]);

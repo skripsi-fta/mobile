@@ -38,12 +38,6 @@ const SearchPageComponent = () => {
         'doctor' | 'spesialisasi' | 'jadwal'
     >(typeInit || 'doctor');
 
-    useEffect(() => {
-        if (typeInit && stepper !== typeInit) {
-            setStepper(() => typeInit);
-        }
-    }, [typeInit, stepper]);
-
     const doctorAPI = new DoctorAPI(http);
 
     const specializationAPI = new SpesialisasiAPI(http);
