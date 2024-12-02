@@ -7,13 +7,14 @@ import {
     type StyleProp,
     StyleSheet,
     ActivityIndicator,
-    Image
+    Image,
+    type DimensionValue
 } from 'react-native';
 
 interface CustomImageProps {
     source: ImageSourcePropType;
-    width: number;
-    height: number;
+    width: DimensionValue;
+    height: DimensionValue;
     style?: StyleProp<ImageStyle>;
     loadingIndicatorColor?: string;
 }
@@ -44,7 +45,9 @@ const CustomImage = ({
                             ...StyleSheet.absoluteFillObject,
                             justifyContent: 'center',
                             alignItems: 'center',
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)'
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                            height,
+                            width
                         }}
                     >
                         <ActivityIndicator style={{ height, width }} />

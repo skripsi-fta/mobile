@@ -1,24 +1,20 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { DoctorAPI } from '@/infrastructure/usecase/doctor';
-import { CustomIcons } from '@/presentation/components/CustomIcons';
 import CustomKeyboardAwareScrollView from '@/presentation/components/CustomKeyboardAwareScrollView';
-import { CustomText } from '@/presentation/components/CustomText';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import { useCallback, useState } from 'react';
 import {
     RefreshControl,
     View,
     type NativeSyntheticEvent,
-    type NativeScrollEvent,
-    TouchableOpacity
+    type NativeScrollEvent
 } from 'react-native';
 import { useInfiniteQuery } from 'react-query';
 import DoctorComponent from '../DoctorComponent';
+import BackHeader from '@/presentation/components/BackHeader';
 
 const SpesialisasiPageComponent = () => {
     const { http } = useAuth();
-
-    const router = useRouter();
 
     const [refreshing, setRefreshing] = useState<boolean>(false);
 
@@ -113,33 +109,9 @@ const SpesialisasiPageComponent = () => {
                         paddingBottom: 32
                     }}
                 >
-                    <View
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            gap: 16,
-                            marginBottom: 24
-                        }}
-                    >
-                        <TouchableOpacity onPress={() => router.back()}>
-                            <CustomIcons
-                                type='ion'
-                                name='arrow-back'
-                                color='black'
-                                size={24}
-                            />
-                        </TouchableOpacity>
-
-                        <CustomText
-                            style={{
-                                fontSize: 20,
-                                fontFamily: 'Poppins-Medium'
-                            }}
-                        >
-                            Daftar Dokter untuk {spesialisasiName}
-                        </CustomText>
-                    </View>
+                    <BackHeader
+                        title={`Daftar Dokter untuk ${spesialisasiName}`}
+                    />
 
                     <DoctorComponent
                         doctorData={doctorData}

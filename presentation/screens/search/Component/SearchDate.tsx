@@ -1,7 +1,6 @@
 import { colors } from '@/constants/colors';
-import { CustomText } from '@/presentation/components/CustomText';
+import CustomCalendar from '@/presentation/components/CustomCalendar';
 import dayjsUtils from '@/utils/dayjs';
-import { locale } from 'dayjs';
 import {
     useCallback,
     type Dispatch,
@@ -9,8 +8,7 @@ import {
     useState
 } from 'react';
 import { View } from 'react-native';
-import { Calendar, type DateData } from 'react-native-calendars';
-import id from 'dayjs/locale/id';
+import { type DateData } from 'react-native-calendars';
 
 interface SearchDateProps {
     dateParam: {
@@ -47,23 +45,35 @@ const SearchDate = ({ dateParam, setDateParam }: SearchDateProps) => {
                     gap: 28
                 }}
             >
-                <Calendar
+                <CustomCalendar
                     enableSwipeMonths
                     current={selectedDate}
                     minDate={dayjsUtils().format('YYYY-MM-DD')}
                     onDayPress={onDayPress}
+                    markingType={'multi-dot'}
                     markedDates={{
                         [selectedDate]: {
                             selected: true,
-                            selectedColor: colors.primaryBlue,
-                            selectedTextColor: 'white'
+                            selectedColor: '#0C41FF',
+                            selectedTextColor: 'white',
+                            dots: [
+                                {
+                                    key: 'vacation',
+                                    color: 'black',
+                                    selectedDotColor: 'black'
+                                },
+                                {
+                                    key: 'vacation',
+                                    color: '#1ABC9C',
+                                    selectedDotColor: '#1ABC9C'
+                                },
+                                {
+                                    key: 'vacation',
+                                    color: '#FF1F00',
+                                    selectedDotColor: '#FF1F00'
+                                }
+                            ]
                         }
-                    }}
-                    key={locale(id)}
-                    theme={{
-                        textMonthFontFamily: 'Poppins-SemiBold',
-                        todayTextColor: 'black',
-                        dayTextColor: 'black'
                     }}
                 />
             </View>
