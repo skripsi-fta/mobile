@@ -1,16 +1,23 @@
 import { CustomText } from '@/presentation/components/CustomText';
-import { Link, Stack } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { Stack, useRouter } from 'expo-router';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export default function NotFoundScreen() {
+    const router = useRouter();
+
     return (
         <>
-            <Stack.Screen options={{ title: 'Oops!' }} />
+            <Stack.Screen options={{ title: 'Oops!', headerShown: false }} />
             <View style={styles.container}>
-                <CustomText type='title'>This screen doesn't exist.</CustomText>
-                <Link href='/' style={styles.link}>
+                <CustomText type='title'>Page not found! 😭</CustomText>
+                <TouchableOpacity
+                    onPress={() => {
+                        router.replace('/(tabs)');
+                    }}
+                    style={styles.link}
+                >
                     <CustomText type='link'>Go to home screen!</CustomText>
-                </Link>
+                </TouchableOpacity>
             </View>
         </>
     );

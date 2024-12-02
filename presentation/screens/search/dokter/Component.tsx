@@ -8,8 +8,8 @@ import CustomKeyboardAwareScrollView from '@/presentation/components/CustomKeybo
 import { CustomText } from '@/presentation/components/CustomText';
 import LoadingOverlay from '@/presentation/components/LoadingOverlay';
 import { formatNumberTotalPasien } from '@/presentation/components/doctor/DoctorItem';
-import { Redirect, useLocalSearchParams } from 'expo-router';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { Redirect, useLocalSearchParams, useRouter } from 'expo-router';
+import { TouchableOpacity, View } from 'react-native';
 import { useQuery } from 'react-query';
 
 const DokterPageComponent = () => {
@@ -47,6 +47,8 @@ const DokterPageComponent = () => {
     const noRepetitiveSchedule = Boolean(
         Object.keys(detailData?.scheduleData ?? {}).length === 0
     );
+
+    const router = useRouter();
 
     return (
         <>
@@ -240,6 +242,14 @@ const DokterPageComponent = () => {
                                     height: 50,
                                     justifyContent: 'center',
                                     marginTop: 24
+                                }}
+                                onPress={() => {
+                                    router.push({
+                                        pathname: '/search/dokter/jadwal',
+                                        params: {
+                                            data: JSON.stringify(doctorData)
+                                        }
+                                    });
                                 }}
                             >
                                 <CustomText

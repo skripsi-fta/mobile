@@ -8,6 +8,7 @@ import { useRouter } from 'expo-router';
 interface DoctorItemProps {
     data: DoctorModel.Response.Data;
     index: number;
+    disableOnClick?: boolean;
 }
 
 export const formatNumberTotalPasien = (num: number) => {
@@ -20,18 +21,20 @@ export const formatNumberTotalPasien = (num: number) => {
     return `${rounded}+`;
 };
 
-const DoctorItem = ({ data }: DoctorItemProps) => {
+const DoctorItem = ({ data, disableOnClick = false }: DoctorItemProps) => {
     const router = useRouter();
 
     return (
         <TouchableOpacity
             onPress={() => {
-                router.push({
-                    pathname: '/search/dokter',
-                    params: {
-                        data: JSON.stringify(data)
-                    }
-                });
+                if (!disableOnClick) {
+                    router.push({
+                        pathname: '/search/dokter',
+                        params: {
+                            data: JSON.stringify(data)
+                        }
+                    });
+                }
             }}
         >
             <View

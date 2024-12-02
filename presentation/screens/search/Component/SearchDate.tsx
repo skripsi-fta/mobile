@@ -50,29 +50,11 @@ const SearchDate = ({ dateParam, setDateParam }: SearchDateProps) => {
                     current={selectedDate}
                     minDate={dayjsUtils().format('YYYY-MM-DD')}
                     onDayPress={onDayPress}
-                    markingType={'multi-dot'}
                     markedDates={{
                         [selectedDate]: {
                             selected: true,
                             selectedColor: '#0C41FF',
-                            selectedTextColor: 'white',
-                            dots: [
-                                {
-                                    key: 'vacation',
-                                    color: 'black',
-                                    selectedDotColor: 'black'
-                                },
-                                {
-                                    key: 'vacation',
-                                    color: '#1ABC9C',
-                                    selectedDotColor: '#1ABC9C'
-                                },
-                                {
-                                    key: 'vacation',
-                                    color: '#FF1F00',
-                                    selectedDotColor: '#FF1F00'
-                                }
-                            ]
+                            selectedTextColor: 'white'
                         }
                     }}
                 />

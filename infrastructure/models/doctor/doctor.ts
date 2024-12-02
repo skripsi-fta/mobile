@@ -14,6 +14,12 @@ export namespace DoctorModel {
         export interface Detail {
             doctorId: number;
         }
+
+        export interface Schedule {
+            doctorId: number;
+            monthNumber: number;
+            yearNumber: number;
+        }
     }
 
     export namespace Response {
@@ -50,6 +56,27 @@ export namespace DoctorModel {
                     startTime: string;
                     endTime: string;
                     capacity: number;
+                }[];
+            };
+        }
+
+        export interface Schedule {
+            [key: string]: {
+                data: {
+                    id: number;
+                    date: string;
+                    capacity: number;
+                    startTime: string;
+                    endTime: string;
+                    type: string;
+                    totalPasien: number;
+                    status: string;
+                    namaRuangan: string;
+                }[];
+                dots: {
+                    key: string;
+                    color: string;
+                    selectedDotColor: string;
                 }[];
             };
         }

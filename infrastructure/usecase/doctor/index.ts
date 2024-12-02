@@ -27,4 +27,14 @@ export class DoctorAPI {
 
         return data.data.data;
     }
+
+    async getSchedule(
+        body: DoctorModel.Request.Schedule
+    ): Promise<DoctorModel.Response.Schedule> {
+        const data = await this.api.get('/doctor/schedule', {
+            params: body
+        });
+
+        return data.data.data;
+    }
 }
