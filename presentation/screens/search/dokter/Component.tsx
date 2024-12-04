@@ -247,7 +247,9 @@ const DokterPageComponent = () => {
                                     router.push({
                                         pathname: '/search/dokter/jadwal',
                                         params: {
-                                            data: JSON.stringify(doctorData)
+                                            data: JSON.stringify(
+                                                detailData?.doctorData
+                                            )
                                         }
                                     });
                                 }}

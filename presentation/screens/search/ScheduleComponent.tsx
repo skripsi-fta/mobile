@@ -4,6 +4,7 @@ import { CustomText } from '@/presentation/components/CustomText';
 import ScheduleItem from '@/presentation/components/schedule/ScheduleItem';
 import dayjsUtils from '@/utils/dayjs';
 import dayjs from 'dayjs';
+import { useRouter } from 'expo-router';
 import { ActivityIndicator, FlatList, Image, View } from 'react-native';
 
 interface ScheduleComponentProps {
@@ -20,6 +21,8 @@ const ScheduleComponent = ({
     scheduleData,
     dateParam
 }: ScheduleComponentProps) => {
+    const router = useRouter();
+
     return (
         <>
             <CustomText
@@ -73,7 +76,20 @@ const ScheduleComponent = ({
                 <FlatList
                     data={scheduleData}
                     renderItem={({ item }) => (
-                        <ScheduleItem data={item} type='list' />
+                        <ScheduleItem
+                            data={item}
+                            type='list'
+                            onClick={() => {
+                                router.push({
+                                    pathname: '/search/dokter',
+                                    params: {
+                                        data: JSON.stringify({
+                                            id: item.doctorId
+                                        })
+                                    }
+                                });
+                            }}
+                        />
                     )}
                     keyExtractor={(item) => item.id.toString()}
                     showsVerticalScrollIndicator={false}

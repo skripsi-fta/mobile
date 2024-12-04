@@ -1,19 +1,13 @@
 import type { Profile } from '@/infrastructure/models/auth/profile';
-import { CustomText } from '@/presentation/components/CustomText';
-import NoticeModal from '@/presentation/screens/profile/patient/Components/NoticeModal';
-import { useModal } from '@/providers/ModalProvider';
 import { getItem, removeItem, setItem } from '@/utils/AsyncStorage';
-import { useIsFocused } from '@react-navigation/native';
 import axios, { type AxiosInstance } from 'axios';
-import { useFocusEffect, useNavigation } from 'expo-router';
+import { useNavigation, useRouter } from 'expo-router';
 import {
     createContext,
     useContext,
     type FC,
-    type PropsWithChildren,
-    useEffect
+    type PropsWithChildren
 } from 'react';
-import { View } from 'react-native';
 import { useQuery } from 'react-query';
 
 export interface AuthContextType {
@@ -52,6 +46,8 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     });
 
+    const router = useRouter();
+
     const refreshAccessToken = async () => {
         try {
             const userData: Profile.Response | null = await getItem(
@@ -62,8 +58,8 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
                 throw new Error('No User Data');
             }
 
-            const response = await axios.get('/auth/refresh', {
-                baseURL: process.env.EXPO_PUBLIC_API_URL,
+            const response = await axios.get('/auth/refresh/asdasdasdasd', {
+                baseURL: `${process.env.EXPO_PUBLIC_API_URL}/mobile`,
                 headers: {
                     Authorization: `Bearer ${userData.refreshToken}`,
                     'Content-Type': 'application/json',
@@ -123,12 +119,14 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
                 } catch (refreshError) {
                     await removeItem('user-data');
 
-                    navigation.reset({
-                        index: 0,
-                        routes: [{ name: '(tabs)' as never }]
-                    });
-
                     refetch();
+
+                    router.replace('/profile');
+
+                    // navigation.reset({
+                    //     index: 0,
+                    //     routes: [{ name: '(tabs)' as never }]
+                    // });
 
                     return Promise.reject(refreshError);
                 }

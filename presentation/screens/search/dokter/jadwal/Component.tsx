@@ -9,12 +9,7 @@ import CustomKeyboardAwareScrollView from '@/presentation/components/CustomKeybo
 import { CustomText } from '@/presentation/components/CustomText';
 import LoadingOverlay from '@/presentation/components/LoadingOverlay';
 import dayjsUtils from '@/utils/dayjs';
-import {
-    Redirect,
-    useLocalSearchParams,
-    useNavigation,
-    useRouter
-} from 'expo-router';
+import { Redirect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useMemo, useState } from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
 import type { DateData } from 'react-native-calendars';
@@ -236,7 +231,7 @@ const DokterPageJadwalComponent = () => {
                                         fontSize: 18
                                     }}
                                 >
-                                    Dokter Detail
+                                    Detail Dokter
                                 </CustomText>
 
                                 <View
@@ -306,7 +301,7 @@ const DokterPageJadwalComponent = () => {
                                                 marginTop: 8
                                             }}
                                         >
-                                            Available Time
+                                            Pilih Jadwal
                                         </CustomText>
                                         <View
                                             style={{
@@ -335,6 +330,21 @@ const DokterPageJadwalComponent = () => {
                                                                 );
                                                                 return;
                                                             }
+
+                                                            router.push({
+                                                                pathname:
+                                                                    '/search/dokter/book',
+                                                                params: {
+                                                                    doctorDataString:
+                                                                        JSON.stringify(
+                                                                            doctorData
+                                                                        ),
+                                                                    scheduleDataString:
+                                                                        JSON.stringify(
+                                                                            d
+                                                                        )
+                                                                }
+                                                            });
                                                         }}
                                                     >
                                                         <View
@@ -360,7 +370,7 @@ const DokterPageJadwalComponent = () => {
                                                                 opacity:
                                                                     d.status ===
                                                                     'Tidak Tersedia'
-                                                                        ? 0.5
+                                                                        ? 0.3
                                                                         : 1
                                                             }}
                                                         >
