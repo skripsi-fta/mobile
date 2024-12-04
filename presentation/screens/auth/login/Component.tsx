@@ -34,6 +34,7 @@ const LoginScreenComponent = () => {
             index: 0,
             routes: [{ name: '(tabs)' as never }]
         });
+
         refetchAuth();
     };
 

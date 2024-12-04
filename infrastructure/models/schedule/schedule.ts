@@ -18,6 +18,7 @@ export namespace ScheduleModel {
             endTime: string;
             type: string;
             totalPasien: number;
+            doctorId: number;
             doctorName: string;
             rating: number;
             totalRating: number;
