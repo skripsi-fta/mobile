@@ -59,7 +59,9 @@ const DoctorComponent = ({
                     renderItem={({ item, index }) => (
                         <DoctorItem data={item} index={index} />
                     )}
-                    keyExtractor={(item) => item.id.toString()}
+                    keyExtractor={(item, index) =>
+                        `${item.id.toString()}${index}`
+                    }
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}
                     ItemSeparatorComponent={() => (
@@ -70,7 +72,7 @@ const DoctorComponent = ({
                         <>
                             {isFetchingNextPageDoctor && (
                                 <ActivityIndicator
-                                    style={{ marginTop: 24 }}
+                                    style={{ marginTop: 8 }}
                                     color={colors.primaryBlue}
                                     size={'large'}
                                 />
