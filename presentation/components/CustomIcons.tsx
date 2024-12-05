@@ -4,7 +4,8 @@ import {
     AntDesign,
     MaterialIcons,
     type FontAwesome5,
-    FontAwesome
+    FontAwesome,
+    Entypo
 } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { type ComponentProps } from 'react';
@@ -14,6 +15,7 @@ type IonIcons = ComponentProps<typeof Ionicons>['name'];
 type AntDesignIcons = ComponentProps<typeof AntDesign>['name'];
 type MaterialIcons = ComponentProps<typeof MaterialIcons>['name'];
 type FontAwesome5Icons = ComponentProps<typeof FontAwesome5>['name'];
+type EntypoIcons = ComponentProps<typeof Entypo>['name'];
 
 type IconType =
     | {
@@ -43,6 +45,13 @@ type IconType =
           style?: StyleProp<TextStyle>;
           color?: string;
           size?: number;
+      }
+    | {
+          type: 'entypo';
+          name: EntypoIcons;
+          style?: StyleProp<TextStyle>;
+          color?: string;
+          size?: number;
       };
 
 export function CustomIcons({ style = {}, type, name, ...rest }: IconType) {
@@ -58,6 +67,8 @@ export function CustomIcons({ style = {}, type, name, ...rest }: IconType) {
         return (
             <FontAwesome size={28} style={[, style]} name={name} {...rest} />
         );
+    } else if (type === 'entypo') {
+        return <Entypo size={28} style={[, style]} name={name} {...rest} />;
     }
 
     return null;

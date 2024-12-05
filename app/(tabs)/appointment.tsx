@@ -1,21 +1,7 @@
-import { CustomText } from '@/presentation/components/CustomText';
-import { View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import AppointmentPageComponent from '@/presentation/screens/appointment/Component';
 
 const AppointmentPage = () => {
-    const insets = useSafeAreaInsets();
-
-    return (
-        <View
-            style={{
-                flex: 1,
-                paddingTop: insets.top + 8,
-                paddingHorizontal: 16
-            }}
-        >
-            <CustomText>Janji Temu Page</CustomText>
-        </View>
-    );
+    return <AppointmentPageComponent />;
 };
 
 export default AppointmentPage;

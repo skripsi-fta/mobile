@@ -1,25 +1,25 @@
 import { colors } from '@/constants/colors';
-import type { ScheduleModel } from '@/infrastructure/models/schedule/schedule';
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { CustomText } from '../CustomText';
 import dayjsUtils from '@/utils/dayjs';
+import type { AppointmentModel } from '@/infrastructure/models/appointment/appointment';
 import { CustomIcons } from '../CustomIcons';
 
-interface ScheduleItemProps {
-    data: ScheduleModel.Response.Data;
-    type: 'list' | 'upcoming' | 'finished';
+interface AppointmentItemProps {
+    data: AppointmentModel.Response.DetailData;
+    type: 'mendatang' | 'lalu';
     onClick?: () => void;
 }
 
-const ScheduleItem = ({ data, type, onClick }: ScheduleItemProps) => {
+const AppointmentItem = ({ data, type, onClick }: AppointmentItemProps) => {
     return (
         <>
             <TouchableOpacity onPress={onClick}>
                 <View
                     style={{
                         backgroundColor: 'white',
-                        height: 110,
+                        height: 120,
                         borderRadius: 10,
                         width: '100%',
                         shadowColor: '#000000',
@@ -51,7 +51,10 @@ const ScheduleItem = ({ data, type, onClick }: ScheduleItemProps) => {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 borderRadius: 10,
-                                borderColor: colors.primaryBlue,
+                                borderColor:
+                                    type === 'mendatang'
+                                        ? 'rgba(0,0,0,0.1)'
+                                        : colors.primaryBlue,
                                 padding: 4,
                                 borderWidth: 1,
                                 gap: 4
@@ -60,7 +63,10 @@ const ScheduleItem = ({ data, type, onClick }: ScheduleItemProps) => {
                             <CustomText
                                 style={{
                                     fontSize: 13,
-                                    color: colors.primaryBlue
+                                    color:
+                                        type === 'mendatang'
+                                            ? 'black'
+                                            : colors.primaryBlue
                                 }}
                             >
                                 {dayjsUtils(data.date, 'YYYY-MM-DD').format(
@@ -70,7 +76,10 @@ const ScheduleItem = ({ data, type, onClick }: ScheduleItemProps) => {
                             <CustomText
                                 style={{
                                     fontSize: 18,
-                                    color: colors.primaryBlue,
+                                    color:
+                                        type === 'mendatang'
+                                            ? 'black'
+                                            : colors.primaryBlue,
                                     fontFamily: 'Poppins-Bold'
                                 }}
                             >
@@ -81,7 +90,10 @@ const ScheduleItem = ({ data, type, onClick }: ScheduleItemProps) => {
                             <CustomText
                                 style={{
                                     fontSize: 11,
-                                    color: colors.primaryBlue
+                                    color:
+                                        type === 'mendatang'
+                                            ? 'black'
+                                            : colors.primaryBlue
                                 }}
                             >
                                 {dayjsUtils(data.date, 'YYYY-MM-DD').format(
@@ -128,26 +140,33 @@ const ScheduleItem = ({ data, type, onClick }: ScheduleItemProps) => {
                         </View>
                     </View>
 
-                    {(type === 'list' || type === 'finished') && (
-                        <View
-                            style={{
-                                display: 'flex',
-                                height: '100%',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                            }}
-                        >
+                    <View
+                        style={{
+                            display: 'flex',
+                            height: '100%',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}
+                    >
+                        {type === 'lalu' ? (
                             <CustomIcons
                                 type='ion'
                                 name='chevron-forward'
                                 size={26}
                             />
-                        </View>
-                    )}
+                        ) : (
+                            <CustomIcons
+                                type='entypo'
+                                name='location'
+                                size={26}
+                                color='#00B08E'
+                            />
+                        )}
+                    </View>
                 </View>
             </TouchableOpacity>
         </>
     );
 };
 
-export default ScheduleItem;
+export default AppointmentItem;

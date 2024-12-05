@@ -18,4 +18,14 @@ export class AppointmentAPI {
 
         return data.data;
     }
+
+    async getList(
+        body: AppointmentModel.Request.List
+    ): Promise<AppointmentModel.Response.List> {
+        const data = await this.api.get('/appointment', {
+            params: body
+        });
+
+        return data.data.data;
+    }
 }

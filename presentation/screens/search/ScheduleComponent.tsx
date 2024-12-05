@@ -91,7 +91,9 @@ const ScheduleComponent = ({
                             }}
                         />
                     )}
-                    keyExtractor={(item) => item.id.toString()}
+                    keyExtractor={(item, index) =>
+                        `${item.id.toString()}${index}`
+                    }
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}
                     ItemSeparatorComponent={() => (
@@ -102,7 +104,7 @@ const ScheduleComponent = ({
                         <>
                             {isFetchingNextPageSchedule && (
                                 <ActivityIndicator
-                                    style={{ marginTop: 24 }}
+                                    style={{ marginTop: 8 }}
                                     color={colors.primaryBlue}
                                     size={'large'}
                                 />

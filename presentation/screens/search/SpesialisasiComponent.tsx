@@ -71,7 +71,9 @@ const SpesialisasiComponent = ({
                             }}
                         />
                     )}
-                    keyExtractor={(item) => item.id.toString()}
+                    keyExtractor={(item, index) =>
+                        `${item.id.toString()}${index}`
+                    }
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}
                     ItemSeparatorComponent={() => (
@@ -83,7 +85,7 @@ const SpesialisasiComponent = ({
                         <>
                             {isFetchingNextPageSpesialisasi && (
                                 <ActivityIndicator
-                                    style={{ marginTop: 24 }}
+                                    style={{ marginTop: 8 }}
                                     color={colors.primaryBlue}
                                     size={'large'}
                                 />
