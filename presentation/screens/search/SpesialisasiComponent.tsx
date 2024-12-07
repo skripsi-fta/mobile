@@ -55,6 +55,10 @@ const SpesialisasiComponent = ({
             ) : (
                 <FlatList
                     data={spesialisasiData}
+                    contentContainerStyle={{
+                        padding: 20
+                    }}
+                    style={{ margin: -20 }}
                     renderItem={({ item, index }) => (
                         <SpesialisasiItem
                             data={item}

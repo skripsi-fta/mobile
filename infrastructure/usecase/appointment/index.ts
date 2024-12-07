@@ -28,4 +28,12 @@ export class AppointmentAPI {
 
         return data.data.data;
     }
+
+    async getDetail(
+        body: AppointmentModel.Request.Detail
+    ): Promise<AppointmentModel.Response.Detail> {
+        const data = await this.api.get('/appointment/detail', { params: body });
+
+        return data.data.data;
+    }
 }

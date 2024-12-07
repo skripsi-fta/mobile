@@ -75,6 +75,10 @@ const ScheduleComponent = ({
             ) : (
                 <FlatList
                     data={scheduleData}
+                    contentContainerStyle={{
+                        padding: 20
+                    }}
+                    style={{ margin: -20 }}
                     renderItem={({ item }) => (
                         <ScheduleItem
                             data={item}

@@ -45,7 +45,6 @@ const DokterPageBookComponent = () => {
         mutationFn: () =>
             appointmentAPI.create({ scheduleId: scheduleData.id }),
         onSuccess: (data) => {
-            console.log(data);
             openModal(<SuccessModal appointmentId={data.data.id} />, {
                 disableClickOutside: true
             });
