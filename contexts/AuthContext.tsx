@@ -58,7 +58,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
                 throw new Error('No User Data');
             }
 
-            const response = await axios.get('/auth/refresh/asdasdasdasd', {
+            const response = await axios.get('/auth/refresh', {
                 baseURL: `${process.env.EXPO_PUBLIC_API_URL}/mobile`,
                 headers: {
                     Authorization: `Bearer ${userData.refreshToken}`,

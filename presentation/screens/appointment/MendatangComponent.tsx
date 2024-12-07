@@ -2,6 +2,7 @@ import { colors } from '@/constants/colors';
 import type { AppointmentModel } from '@/infrastructure/models/appointment/appointment';
 import { CustomText } from '@/presentation/components/CustomText';
 import AppointmentItem from '@/presentation/components/appointment/AppointmentItem';
+import { useRouter } from 'expo-router';
 import { ActivityIndicator, FlatList, Image, View } from 'react-native';
 
 interface MendatangComponentProps {
@@ -13,6 +14,8 @@ const MendatangComponent = ({
     isFetchingUpcomingSchedule,
     upcomingScheduleData
 }: MendatangComponentProps) => {
+    const router = useRouter();
+
     return (
         <>
             {upcomingScheduleData.length === 0 ? (
@@ -45,8 +48,21 @@ const MendatangComponent = ({
                     <FlatList
                         data={upcomingScheduleData}
                         renderItem={({ item }) => (
-                            <AppointmentItem data={item} type='mendatang' />
+                            <AppointmentItem
+                                data={item}
+                                type='mendatang'
+                                onClick={() => {
+                                    router.push({
+                                        pathname: '/appointment/detail',
+                                        params: { appointmentId: item.id }
+                                    });
+                                }}
+                            />
                         )}
+                        contentContainerStyle={{
+                            padding: 20
+                        }}
+                        style={{ margin: -20 }}
                         keyExtractor={(item, index) =>
                             `${item.id.toString()}${index}`
                         }

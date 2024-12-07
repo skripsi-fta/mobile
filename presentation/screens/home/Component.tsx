@@ -155,29 +155,36 @@ const HomePageComponent = () => {
                         </View>
 
                         {!loadingSpecialization ? (
-                            <FlatList
-                                horizontal
-                                data={dataSpecialization?.data ?? []}
-                                renderItem={({ item, index }) => (
-                                    <SpesialisasiItem
-                                        data={item}
-                                        index={index}
-                                        onClick={() => {
-                                            router.push({
-                                                pathname:
-                                                    '/search/spesialisasi',
-                                                params: {
-                                                    spesialisasiId: item.id,
-                                                    spesialisasiName: item.name
-                                                }
-                                            });
-                                        }}
-                                    />
-                                )}
-                                keyExtractor={(item) => item.id.toString()}
-                                showsVerticalScrollIndicator={false}
-                                showsHorizontalScrollIndicator={false}
-                            />
+                            <View>
+                                <FlatList
+                                    horizontal
+                                    contentContainerStyle={{
+                                        padding: 20
+                                    }}
+                                    style={{ margin: -20 }}
+                                    data={dataSpecialization?.data ?? []}
+                                    renderItem={({ item, index }) => (
+                                        <SpesialisasiItem
+                                            data={item}
+                                            index={index}
+                                            onClick={() => {
+                                                router.push({
+                                                    pathname:
+                                                        '/search/spesialisasi',
+                                                    params: {
+                                                        spesialisasiId: item.id,
+                                                        spesialisasiName:
+                                                            item.name
+                                                    }
+                                                });
+                                            }}
+                                        />
+                                    )}
+                                    keyExtractor={(item) => item.id.toString()}
+                                    showsVerticalScrollIndicator={false}
+                                    showsHorizontalScrollIndicator={false}
+                                />
+                            </View>
                         ) : (
                             <View
                                 style={{
@@ -245,6 +252,10 @@ const HomePageComponent = () => {
                                     <View style={{ height: 24 }} />
                                 )}
                                 scrollEnabled={false}
+                                contentContainerStyle={{
+                                    padding: 20
+                                }}
+                                style={{ margin: -20 }}
                             />
                         ) : (
                             <View

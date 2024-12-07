@@ -68,6 +68,10 @@ const DoctorComponent = ({
                         <View style={{ height: 24 }} />
                     )}
                     scrollEnabled={false}
+                    contentContainerStyle={{
+                        padding: 20
+                    }}
+                    style={{ margin: -20 }}
                     ListFooterComponent={() => (
                         <>
                             {isFetchingNextPageDoctor && (

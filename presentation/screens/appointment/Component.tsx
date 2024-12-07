@@ -17,7 +17,7 @@ import MendatangComponent from './MendatangComponent';
 import LaluComponent from './LaluComponent';
 
 const AppointmentPageComponent = () => {
-    const { http, user } = useAuth();
+    const { http } = useAuth();
 
     const [stepper, setStepper] = useState<'mendatang' | 'lalu'>('mendatang');
 

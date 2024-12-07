@@ -9,6 +9,10 @@ export namespace AppointmentModel {
             pageNumber: number;
             type: string;
         }
+
+        export interface Detail {
+            appointmentId: number;
+        }
     }
 
     export namespace Response {
@@ -67,6 +71,38 @@ export namespace AppointmentModel {
         export interface Create {
             message: string;
             data: Data;
+        }
+
+        export interface QueueData {
+            queueNumber: number;
+            patientName: string;
+        }
+
+        export interface Detail {
+            appointmentId: number;
+            scheduleId: number;
+            bookingCode: string;
+            status: string;
+            checkedIn: boolean;
+            checkInTime: string;
+            finishTime: string;
+            consultationFee: number;
+            pharmacyFee: number;
+            notesDoctor: string;
+            rating: number;
+            doctorName: string;
+            spesialisasiName: string;
+            scheduleDate: string;
+            startTime: string;
+            endTime: string;
+            roomName: string;
+            diagnosisDoctor: string;
+            prescription: string[];
+            notesMedicalRecord: string;
+            cashierQueueNumber: QueueData;
+            pharmacyQueueNumber: QueueData;
+            doctorQueueNumber: QueueData;
+            scheduleMoveId: number;
         }
     }
 }
