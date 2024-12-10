@@ -7,8 +7,9 @@ import CustomKeyboardAwareScrollView from '@/presentation/components/CustomKeybo
 import { CustomText } from '@/presentation/components/CustomText';
 import LoadingOverlay from '@/presentation/components/LoadingOverlay';
 import dayjsUtils from '@/utils/dayjs';
-import { Redirect, useLocalSearchParams } from 'expo-router';
-import { TouchableOpacity, View } from 'react-native';
+import { Redirect, useLocalSearchParams, useRouter } from 'expo-router';
+import { useState } from 'react';
+import { RefreshControl, TouchableOpacity, View } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import { useQuery } from 'react-query';
 
@@ -21,6 +22,8 @@ const DetailAppointmentComponent = () => {
         return <Redirect href={'/+not-found'} />;
     }
 
+    const router = useRouter();
+
     const { http, user } = useAuth();
 
     const appointmentAPI = new AppointmentAPI(http);
@@ -28,7 +31,8 @@ const DetailAppointmentComponent = () => {
     const {
         data: appointmentData,
         isLoading,
-        isError
+        isError,
+        refetch
     } = useQuery({
         queryKey: ['appointment-detail', appointmentId],
         queryFn: () =>
@@ -43,9 +47,22 @@ const DetailAppointmentComponent = () => {
 
     const needCheckIn = Boolean(!appointmentData?.checkedIn);
 
-    const canSeeQueue = Boolean(appointmentData?.status.includes('queue') || appointmentData?.status === 'checkin');
+    const canSeeQueue = Boolean(
+        appointmentData?.status.includes('queue') ||
+            appointmentData?.status === 'checkin'
+    );
 
     const canSeeHistory = Boolean(appointmentData?.status === 'done');
+
+    const [refreshing, setRefreshing] = useState<boolean>(false);
+
+    const onRefresh = async () => {
+        setRefreshing(() => true);
+
+        await refetch();
+
+        setRefreshing(() => false);
+    };
 
     return (
         <>
@@ -54,6 +71,12 @@ const DetailAppointmentComponent = () => {
             ) : (
                 <CustomKeyboardAwareScrollView
                     containerStyle={{ backgroundColor: 'white' }}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                        />
+                    }
                 >
                     <View
                         style={{
@@ -354,7 +377,12 @@ const DetailAppointmentComponent = () => {
                                     flex: 1,
                                     marginTop: 32
                                 }}
-                                onPress={() => {}}
+                                onPress={() => {
+                                    router.push({
+                                        pathname: '/appointment/detail/queue',
+                                        params: { appointmentId }
+                                    });
+                                }}
                             >
                                 <CustomText
                                     style={{
