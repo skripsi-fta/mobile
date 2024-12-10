@@ -32,7 +32,19 @@ export class AppointmentAPI {
     async getDetail(
         body: AppointmentModel.Request.Detail
     ): Promise<AppointmentModel.Response.Detail> {
-        const data = await this.api.get('/appointment/detail', { params: body });
+        const data = await this.api.get('/appointment/detail', {
+            params: body
+        });
+
+        return data.data.data;
+    }
+
+    async getQueue(
+        body: AppointmentModel.Request.Queue
+    ): Promise<AppointmentModel.Response.Queue> {
+        const data = await this.api.get('/appointment/queue', {
+            params: body
+        });
 
         return data.data.data;
     }

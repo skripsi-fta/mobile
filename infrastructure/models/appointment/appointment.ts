@@ -13,6 +13,10 @@ export namespace AppointmentModel {
         export interface Detail {
             appointmentId: number;
         }
+
+        export interface Queue {
+            appointmentId: number;
+        }
     }
 
     export namespace Response {
@@ -99,10 +103,19 @@ export namespace AppointmentModel {
             diagnosisDoctor: string;
             prescription: string[];
             notesMedicalRecord: string;
-            cashierQueueNumber: QueueData;
-            pharmacyQueueNumber: QueueData;
-            doctorQueueNumber: QueueData;
+            globalQueueNumber: number;
+            cashierQueueNumber: number;
+            pharmacyQueueNumber: number;
+            doctorQueueNumber: number;
             scheduleMoveId: number;
+        }
+
+        export interface Queue {
+            globalQueue: QueueData;
+            doctorQueue: QueueData;
+            pharmacyQueue: QueueData;
+            cashierQueue: QueueData;
+            detailAppointment: Detail;
         }
     }
 }
