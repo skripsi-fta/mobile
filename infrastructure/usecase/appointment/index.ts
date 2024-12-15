@@ -48,4 +48,12 @@ export class AppointmentAPI {
 
         return data.data.data;
     }
+
+    async createRating(
+        body: AppointmentModel.Request.Rating
+    ): Promise<AppointmentModel.Response.Rating> {
+        const data = await this.api.post('/appointment/rating', body);
+
+        return data.data;
+    }
 }

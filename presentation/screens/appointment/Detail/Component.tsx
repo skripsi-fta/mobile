@@ -6,12 +6,14 @@ import { CustomIcons } from '@/presentation/components/CustomIcons';
 import CustomKeyboardAwareScrollView from '@/presentation/components/CustomKeyboardAwareScrollView';
 import { CustomText } from '@/presentation/components/CustomText';
 import LoadingOverlay from '@/presentation/components/LoadingOverlay';
+import { useModal } from '@/providers/ModalProvider';
 import dayjsUtils from '@/utils/dayjs';
 import { Redirect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { RefreshControl, TouchableOpacity, View } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
+import SuccessModal from './Component/SuccessModal';
 
 const DetailAppointmentComponent = () => {
     const { appointmentId } = useLocalSearchParams() as unknown as {
@@ -28,6 +30,8 @@ const DetailAppointmentComponent = () => {
 
     const appointmentAPI = new AppointmentAPI(http);
 
+    const [rating, setRating] = useState<number>(0);
+
     const {
         data: appointmentData,
         isLoading,
@@ -36,7 +40,26 @@ const DetailAppointmentComponent = () => {
     } = useQuery({
         queryKey: ['appointment-detail', appointmentId],
         queryFn: () =>
-            appointmentAPI.getDetail({ appointmentId: Number(appointmentId) })
+            appointmentAPI.getDetail({ appointmentId: Number(appointmentId) }),
+        onSuccess: (data) => {
+            setRating(() => (data.rating ? data.rating : 0));
+        }
+    });
+
+    const { openModal } = useModal();
+
+    const { mutate: giveRating } = useMutation({
+        mutationFn: () =>
+            appointmentAPI.createRating({
+                appointmentId: Number(appointmentId),
+                rating
+            }),
+        onSuccess: () => {
+            openModal(<SuccessModal />, {
+                disableClickOutside: true
+            });
+            refetch();
+        }
     });
 
     if (isError) {
@@ -396,67 +419,43 @@ const DetailAppointmentComponent = () => {
                         )}
 
                         {canSeeHistory && (
-                            <View
-                                style={{
-                                    backgroundColor: 'white',
-                                    borderRadius: 10,
-                                    width: '100%',
-                                    shadowColor: '#000000',
-                                    shadowOffset: {
-                                        width: 0,
-                                        height: 1
-                                    },
-                                    shadowOpacity: 0.25,
-                                    shadowRadius: 4,
-                                    elevation: 5,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    paddingVertical: 16,
-                                    paddingHorizontal: 16,
-                                    gap: 16,
-                                    marginTop: 32
-                                }}
-                            >
-                                <CustomText
-                                    style={{
-                                        fontFamily: 'Poppins-SemiBold',
-                                        fontSize: 18
-                                    }}
-                                >
-                                    Histori Pemeriksaan
-                                </CustomText>
-
+                            <>
                                 <View
                                     style={{
+                                        backgroundColor: 'white',
+                                        borderRadius: 10,
+                                        width: '100%',
+                                        shadowColor: '#000000',
+                                        shadowOffset: {
+                                            width: 0,
+                                            height: 1
+                                        },
+                                        shadowOpacity: 0.25,
+                                        shadowRadius: 4,
+                                        elevation: 5,
                                         display: 'flex',
                                         flexDirection: 'column',
-                                        gap: 8,
-                                        marginBottom: 8
+                                        paddingVertical: 16,
+                                        paddingHorizontal: 16,
+                                        gap: 16,
+                                        marginTop: 32
                                     }}
                                 >
                                     <CustomText
                                         style={{
                                             fontFamily: 'Poppins-SemiBold',
-                                            fontSize: 15
+                                            fontSize: 18
                                         }}
                                     >
-                                        Catatan Dokter
+                                        Histori Pemeriksaan
                                     </CustomText>
-                                    <CustomText
-                                        style={{
-                                            fontSize: 13
-                                        }}
-                                    >
-                                        {appointmentData?.notesDoctor}
-                                    </CustomText>
-                                </View>
 
-                                {appointmentData?.prescription.length !== 0 && (
                                     <View
                                         style={{
                                             display: 'flex',
                                             flexDirection: 'column',
-                                            gap: 8
+                                            gap: 8,
+                                            marginBottom: 8
                                         }}
                                     >
                                         <CustomText
@@ -465,31 +464,171 @@ const DetailAppointmentComponent = () => {
                                                 fontSize: 15
                                             }}
                                         >
-                                            Obat
+                                            Catatan Dokter
                                         </CustomText>
+                                        <CustomText
+                                            style={{
+                                                fontSize: 13
+                                            }}
+                                        >
+                                            {appointmentData?.notesDoctor}
+                                        </CustomText>
+                                    </View>
+
+                                    {appointmentData?.prescription.length !==
+                                        0 && (
                                         <View
                                             style={{
                                                 display: 'flex',
                                                 flexDirection: 'column',
-                                                gap: 6
+                                                gap: 8
                                             }}
                                         >
-                                            {appointmentData?.prescription.map(
-                                                (d) => (
-                                                    <CustomText
-                                                        style={{
-                                                            fontSize: 13
-                                                        }}
-                                                        key={d}
-                                                    >
-                                                        {d}
-                                                    </CustomText>
-                                                )
-                                            )}
+                                            <CustomText
+                                                style={{
+                                                    fontFamily:
+                                                        'Poppins-SemiBold',
+                                                    fontSize: 15
+                                                }}
+                                            >
+                                                Obat
+                                            </CustomText>
+                                            <View
+                                                style={{
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    gap: 6
+                                                }}
+                                            >
+                                                {appointmentData?.prescription.map(
+                                                    (d) => (
+                                                        <CustomText
+                                                            style={{
+                                                                fontSize: 13
+                                                            }}
+                                                            key={d}
+                                                        >
+                                                            {d}
+                                                        </CustomText>
+                                                    )
+                                                )}
+                                            </View>
                                         </View>
+                                    )}
+                                </View>
+
+                                <View
+                                    style={{
+                                        backgroundColor: 'white',
+                                        borderRadius: 10,
+                                        width: '100%',
+                                        shadowColor: '#000000',
+                                        shadowOffset: {
+                                            width: 0,
+                                            height: 1
+                                        },
+                                        shadowOpacity: 0.25,
+                                        shadowRadius: 4,
+                                        elevation: 5,
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        paddingVertical: 16,
+                                        paddingHorizontal: 16,
+                                        paddingBottom:
+                                            appointmentData?.rating === null
+                                                ? 16
+                                                : 32,
+                                        gap: 32,
+                                        marginTop: 32
+                                    }}
+                                >
+                                    <CustomText
+                                        style={{
+                                            fontFamily: 'Poppins-SemiBold',
+                                            fontSize: 18
+                                        }}
+                                    >
+                                        Beri Penilaian Dokter
+                                    </CustomText>
+
+                                    <View
+                                        style={{
+                                            display: 'flex',
+                                            flexDirection: 'row',
+                                            gap: 24
+                                        }}
+                                    >
+                                        {Array.from({ length: 5 }).map(
+                                            (_, index) => (
+                                                <TouchableOpacity
+                                                    style={{ flex: 1 }}
+                                                    onPress={() => {
+                                                        if (
+                                                            rating ===
+                                                            index + 1
+                                                        ) {
+                                                            setRating(() => 0);
+                                                        } else {
+                                                            setRating(
+                                                                () => index + 1
+                                                            );
+                                                        }
+                                                    }}
+                                                    disabled={
+                                                        appointmentData?.rating !==
+                                                        null
+                                                    }
+                                                    key={`${index}-rating`}
+                                                >
+                                                    <CustomIcons
+                                                        type='ant-design'
+                                                        name='star'
+                                                        color={
+                                                            rating <= index
+                                                                ? '#D9D9D9'
+                                                                : '#FF872E'
+                                                        }
+                                                        size={36}
+                                                    />
+                                                </TouchableOpacity>
+                                            )
+                                        )}
                                     </View>
-                                )}
-                            </View>
+
+                                    {appointmentData?.rating === null && (
+                                        <TouchableOpacity
+                                            style={{
+                                                borderRadius: 20,
+                                                backgroundColor:
+                                                    colors.primaryBlue,
+                                                alignItems: 'center',
+                                                height: 50,
+                                                justifyContent: 'center',
+                                                flex: 1
+                                            }}
+                                            onPress={() => {
+                                                if (
+                                                    rating !== 0 &&
+                                                    appointmentData?.rating ===
+                                                        null
+                                                ) {
+                                                    giveRating();
+                                                }
+                                            }}
+                                        >
+                                            <CustomText
+                                                style={{
+                                                    color: 'white',
+                                                    fontFamily:
+                                                        'Poppins-SemiBold'
+                                                }}
+                                            >
+                                                SUBMIT
+                                            </CustomText>
+                                        </TouchableOpacity>
+                                    )}
+                                </View>
+                            </>
                         )}
                     </View>
                 </CustomKeyboardAwareScrollView>

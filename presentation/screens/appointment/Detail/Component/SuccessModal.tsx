@@ -1,24 +1,9 @@
 import { CustomText } from '@/presentation/components/CustomText';
 import { useModal } from '@/providers/ModalProvider';
-import { useRouter } from 'expo-router';
 import { Image, TouchableOpacity, View } from 'react-native';
 
-interface SuccessModalProps {
-    appointmentId: number;
-}
-
-const SuccessModal = ({ appointmentId }: SuccessModalProps) => {
-    const router = useRouter();
-
+const SuccessModal = () => {
     const { closeModal } = useModal();
-
-    const redirect = () => {
-        closeModal();
-        router.push({
-            pathname: '/appointment/detail',
-            params: { appointmentId: appointmentId }
-        });
-    };
 
     return (
         <>
@@ -63,17 +48,7 @@ const SuccessModal = ({ appointmentId }: SuccessModalProps) => {
                                 fontSize: 18
                             }}
                         >
-                            Pendaftaran berhasil
-                        </CustomText>
-                        <CustomText
-                            style={{
-                                fontSize: 14,
-                                textAlign: 'center',
-                                paddingHorizontal: 28
-                            }}
-                        >
-                            Pendaftaranmu sudah dikonfirmasi. Periksa histori
-                            untuk detil lengkapnya.
+                            Pemberian Rating Berhasil
                         </CustomText>
                     </View>
 
@@ -86,7 +61,7 @@ const SuccessModal = ({ appointmentId }: SuccessModalProps) => {
                             justifyContent: 'center',
                             width: '70%'
                         }}
-                        onPress={redirect}
+                        onPress={closeModal}
                     >
                         <CustomText
                             style={{
@@ -94,7 +69,7 @@ const SuccessModal = ({ appointmentId }: SuccessModalProps) => {
                                 fontFamily: 'Poppins-SemiBold'
                             }}
                         >
-                            LIHAT DETAIL
+                            Tutup
                         </CustomText>
                     </TouchableOpacity>
                 </View>

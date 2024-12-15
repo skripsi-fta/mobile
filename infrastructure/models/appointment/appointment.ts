@@ -17,9 +17,18 @@ export namespace AppointmentModel {
         export interface Queue {
             appointmentId: number;
         }
+
+        export interface Rating {
+            appointmentId: number;
+            rating: number;
+        }
     }
 
     export namespace Response {
+        export interface Rating {
+            message: string;
+        }
+
         export interface DetailData {
             id: number;
             scheduleId: number;
