@@ -1,19 +1,24 @@
-import { Link, Stack } from 'expo-router';
-import { StyleSheet } from 'react-native';
-
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { CustomText } from '@/presentation/components/CustomText';
+import { Stack, useRouter } from 'expo-router';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export default function NotFoundScreen() {
+    const router = useRouter();
+
     return (
         <>
-            <Stack.Screen options={{ title: 'Oops!' }} />
-            <ThemedView style={styles.container}>
-                <ThemedText type='title'>This screen doesn't exist.</ThemedText>
-                <Link href='/' style={styles.link}>
-                    <ThemedText type='link'>Go to home screen!</ThemedText>
-                </Link>
-            </ThemedView>
+            <Stack.Screen options={{ title: 'Oops!', headerShown: false }} />
+            <View style={styles.container}>
+                <CustomText type='title'>Page not found! 😭</CustomText>
+                <TouchableOpacity
+                    onPress={() => {
+                        router.replace('/(tabs)');
+                    }}
+                    style={styles.link}
+                >
+                    <CustomText type='link'>Go to home screen!</CustomText>
+                </TouchableOpacity>
+            </View>
         </>
     );
 }
