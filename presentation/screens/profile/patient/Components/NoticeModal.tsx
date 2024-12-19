@@ -1,4 +1,4 @@
-import { colors } from '@/constants/colors';
+import { colors } from '@/constants/Colors';
 import { CustomText } from '@/presentation/components/CustomText';
 import { useModal } from '@/providers/ModalProvider';
 import { useRouter } from 'expo-router';

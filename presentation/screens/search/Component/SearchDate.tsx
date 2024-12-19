@@ -1,4 +1,4 @@
-import { colors } from '@/constants/colors';
+import { colors } from '@/constants/Colors';
 import CustomCalendar from '@/presentation/components/CustomCalendar';
 import dayjsUtils from '@/utils/dayjs';
 import {

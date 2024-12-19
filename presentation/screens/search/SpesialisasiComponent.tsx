@@ -1,4 +1,4 @@
-import { colors } from '@/constants/colors';
+import { colors } from '@/constants/Colors';
 import type { SpesialisasiModel } from '@/infrastructure/models/spesialisasi/spesialisasi';
 import { CustomText } from '@/presentation/components/CustomText';
 import SpesialisasiItem from '@/presentation/components/spesialisasi/SpesialisasiItem';

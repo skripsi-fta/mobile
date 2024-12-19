@@ -1,4 +1,4 @@
-import { colors } from '@/constants/colors';
+import { colors } from '@/constants/Colors';
 import { useAuth } from '@/contexts/AuthContext';
 import type { UserLoginForm } from '@/infrastructure/models/auth/login';
 import { AuthAPI } from '@/infrastructure/usecase/auth';

@@ -1,4 +1,4 @@
-import { colors } from '@/constants/colors';
+import { colors } from '@/constants/Colors';
 import { useAuth } from '@/contexts/AuthContext';
 import { DoctorAPI } from '@/infrastructure/usecase/doctor';
 import { SpesialisasiAPI } from '@/infrastructure/usecase/spesialisasi';

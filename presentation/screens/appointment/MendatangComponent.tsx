@@ -1,4 +1,4 @@
-import { colors } from '@/constants/colors';
+import { colors } from '@/constants/Colors';
 import type { AppointmentModel } from '@/infrastructure/models/appointment/appointment';
 import { CustomText } from '@/presentation/components/CustomText';
 import AppointmentItem from '@/presentation/components/appointment/AppointmentItem';

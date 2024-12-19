@@ -1,4 +1,4 @@
-import { colors } from '@/constants/colors';
+import { colors } from '@/constants/Colors';
 import { useAuth } from '@/contexts/AuthContext';
 import type { DoctorModel } from '@/infrastructure/models/doctor/doctor';
 import type { ScheduleModel } from '@/infrastructure/models/schedule/schedule';

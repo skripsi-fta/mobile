@@ -12,7 +12,7 @@ import dayjs from 'dayjs';
 import { TextInput } from '@/presentation/components/CustomTextInput';
 import CustomKeyboardAwareScrollView from '@/presentation/components/CustomKeyboardAwareScrollView';
 import CustomDropdownPicker from '@/presentation/components/CustomDropdownPicker';
-import { colors } from '@/constants/colors';
+import { colors } from '@/constants/Colors';
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import CustomDatePicker from '@/presentation/components/CustomDatePicker';

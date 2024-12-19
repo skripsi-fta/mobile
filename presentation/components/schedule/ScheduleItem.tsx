@@ -1,4 +1,4 @@
-import { colors } from '@/constants/colors';
+import { colors } from '@/constants/Colors';
 import type { ScheduleModel } from '@/infrastructure/models/schedule/schedule';
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';

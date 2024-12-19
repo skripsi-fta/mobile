@@ -1,4 +1,4 @@
-import { colors } from '@/constants/colors';
+import { colors } from '@/constants/Colors';
 import { useAuth } from '@/contexts/AuthContext';
 import { AppointmentAPI } from '@/infrastructure/usecase/appointment';
 import CustomKeyboardAwareScrollView from '@/presentation/components/CustomKeyboardAwareScrollView';

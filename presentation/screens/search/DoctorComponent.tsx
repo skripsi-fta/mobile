@@ -1,4 +1,4 @@
-import { colors } from '@/constants/colors';
+import { colors } from '@/constants/Colors';
 import type { DoctorModel } from '@/infrastructure/models/doctor/doctor';
 import { CustomText } from '@/presentation/components/CustomText';
 import DoctorItem from '@/presentation/components/doctor/DoctorItem';

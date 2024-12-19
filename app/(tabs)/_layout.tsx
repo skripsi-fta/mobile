@@ -1,7 +1,7 @@
 import { Tabs, useNavigation, useSegments } from 'expo-router';
 import React, { useEffect, useMemo } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { colors } from '@/constants/colors';
+import { colors } from '@/constants/Colors';
 import { CustomIcons } from '@/presentation/components/CustomIcons';
 import { useModal } from '@/providers/ModalProvider';
 import NoticeModal from '@/presentation/screens/profile/patient/Components/NoticeModal';
